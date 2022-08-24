@@ -48,11 +48,13 @@ class Obra:
     titulo: str
     editora: Editora
     isbn: int
-    autores: Autor
+    editora: Autor
     palavras_chave: List[str]
     data_publi: date
     nro_paginas: int
     categoria_obra: CategoriaObra
+    copias_obra: List[CopiaObra]
+
 
 
 class TipoSituacao:
@@ -92,9 +94,4 @@ class Atrasado(TipoSituacao, metaclass=SingletonMeta):
         self._tipo_state._state = self
 
 
-class Disponivel(TipoSituacao, metaclass=SingletonMeta):
-    def __init__(self, tipo_state: TipoSituacao):
-        self._tipo_state = tipo_state
 
-    def trocar_situacao(self):
-        self._tipo_state._state = self
