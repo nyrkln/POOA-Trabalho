@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from datetime import date
 from enum import Enum
+#import string
 
 
 class TipoLeitor(Enum):
@@ -37,7 +38,7 @@ class Usario:
     cpf: str
     cep: str
     data_nasc: date
-    telefone: int
+    telefone: str
     email: str
     usuario: TipoUsuario
     senha: str
