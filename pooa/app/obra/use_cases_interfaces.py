@@ -8,59 +8,64 @@ from pooa.domain.obra import Obra
 
 class IConsultarCopiaObraUseCase(ABC):
     @abstractmethod
-    def execute(self) -> CopiaObra:
-        ...
+    def consultarCopiaObra(self) -> CopiaObra:
+        pass
 
 
 class IAlterarDadosObraUseCase(ABC):
     @abstractmethod
-    def execute(self) -> CopiaObra:
-        ...
+    def alterarDadosObra(self) -> Obra:
+        pass
 
-
-class IConsultarCopiaObraSituacaoUseCase(ABC):
+class IAlterarDadosCopiaObraUseCase(ABC):
     @abstractmethod
-    def execute(self) -> List[CopiaObra]:
-        ...
+    def alterarDadosCopiaObra(self) -> CopiaObra:
+        pass
+
+
+class IConsultarCopiaObraSituacaoUseCase(ABC): #precisa desse ou do listar?
+    @abstractmethod
+    def consultarCopiaObraSituacao(self) -> List[CopiaObra]:
+        pass
 
 
 class ICadastrarObraUseCase(ABC):
     @abstractmethod
-    def execute(self) -> Obra:
-        ...
+    def cadastrarObra(self) -> Obra:
+        pass
 
 
 class ICadastrarCopiaObraUseCase(ABC):
     @abstractmethod
-    def execute(self) -> CopiaObra:
-        ...
+    def cadastrarCopiaObra(self) -> CopiaObra:
+        pass
 
 
 class IListarSituacaoCopiaObraUseCase(ABC):
     @abstractmethod
-    def execute(self) -> None:
-        ...
+    def listarCopiaObraSituacao(self) -> None:
+        pass
 
 
 class ICopiaObra(ABC):
     @abstractmethod
     def criar_obra(self) -> Obra:
-        ...
+        pass
 
 
 class IReservarObraUseCase(ABC):
     @abstractmethod
-    def execute(self):
-        ...
+    def reservarObra(self) -> Obra: 
+        pass
 
 
 class IEmprestarObraUseCase(ABC):
     @abstractmethod
-    def execute(self):
-        ...
+    def emprestarObra(self) -> Obra: #realmente é tipo Obra? ou copia obra?
+        pass
 
 
 class IDevolverObraUseCase(ABC):
     @abstractmethod
-    def execute(self):
-        ...
+    def devolverObra(self) -> Obra:
+        pass

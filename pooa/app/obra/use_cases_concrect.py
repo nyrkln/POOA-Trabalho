@@ -1,5 +1,6 @@
 from typing import List
 from pooa.app.obra.use_cases_interfaces import (
+    IAlterarDadosCopiaObraUseCase,
     IAlterarDadosObraUseCase,
     ICadastrarCopiaObraUseCase,
     ICadastrarObraUseCase,
@@ -24,45 +25,48 @@ class CopiaObra(ICopiaObra):
 
 
 class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
-    def execute(self) -> CopiaObra:
+    def consultarCopiaObra(self) -> CopiaObra:
         ...
 
 
 class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):
-    def execute(self) -> CopiaObra:
+    def alterarDadosObra(self) -> Obra:
         ...
 
+class AlterarDadosCopiaObraUseCase(IAlterarDadosCopiaObraUseCase):
+    def alterarDadosCopiaObra(self) -> CopiaObra:
+        pass
 
 class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
-    def execute(self) -> List[CopiaObra]:
+    def consultarCopiaObraSituacao(self) -> List[CopiaObra]:
         ...
 
 
 class CadastrarObraUseCase(ICadastrarObraUseCase):
-    def execute(self) -> Obra:
+    def cadastrarObra(self) -> Obra:
         ...
 
 
 class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
-    def execute(self) -> CopiaObra:
+    def cadastrarCopiaObra(self) -> CopiaObra:
         ...
 
 
 class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
-    def execute(self) -> None:
+    def listarCopiaObraSituacao(self) -> None:
         ...
 
 
 class ReservarObraUseCase(IReservarObraUseCase):
-    def execute(self):
+    def reservarObra(self):
         ...
 
 
 class EmprestarObraUseCase(IEmprestarObraUseCase):
-    def execute(self):
+    def emprestarObra(self):
         ...
 
 
 class DevolverObraUseCase(IDevolverObraUseCase):
-    def execute(self):
+    def devolverObra(self):
         ...
