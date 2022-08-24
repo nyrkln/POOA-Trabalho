@@ -4,17 +4,17 @@ from abc import ABC, abstractmethod
 
 class IConsultarDisciplinasUseCase(ABC):
     @abstractmethod
-    def execute(self):
+    def consultarDisciplina(self,usuario):
         ...
 
 
 class IConsultarGruposAcademicosUseCase(ABC):
     @abstractmethod
-    def execute(self):
+    def consultarGruposAcademicos(self,usuario):
         ...
 
 
 class IAlterarDadosUsuarioUseCase(ABC):
     @abstractmethod
-    def execute(self):
+    def alterarDadosUsuario(self,usuario):
         ...

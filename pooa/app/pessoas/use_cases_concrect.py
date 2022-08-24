@@ -6,15 +6,15 @@ from pooa.app.pessoas.use_cases_interfaces import (
 
 
 class ConsultarDisciplinasUseCase(IConsultarDisciplinasUseCase):
-    def execute(self):
+    def consultarDisciplina(self,usuario):
         ...
 
 
 class ConsultarGruposAcademicosUseCase(IConsultarGruposAcademicosUseCase):
-    def execute(self):
+    def consultarGruposAcademicos(self,usuario):
         ...
 
 
 class AlterarDadosUsuarioUseCase(IAlterarDadosUsuarioUseCase):
-    def execute(self):
+    def alterarDadosUsuario(self,usuario):
         ...
