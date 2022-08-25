@@ -16,5 +16,10 @@ class ConsultarGruposAcademicosUseCase(IConsultarGruposAcademicosUseCase):
 
 
 class AlterarDadosUsuarioUseCase(IAlterarDadosUsuarioUseCase):
-    def alterarDadosUsuario(self,usuario):
+    def alterarDadosUsuario(self,usuario,futuraListaDeUsuarios):
+        for indice,usuarios in enumerate(futuraListaDeUsuarios):
+            if usuario.cpf == usuarios.cpf:
+                futuraListaDeUsuarios[indice] = usuario
+                return True
+        return False
         ...

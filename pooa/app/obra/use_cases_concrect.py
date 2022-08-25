@@ -37,7 +37,7 @@ class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):#não sei se é exatamen
     def alterarDadosObra(self,obra,futuraListaDeObras) -> bool:
         for indice,obras in enumerate(futuraListaDeObras):
             if obras.titulo == obra.titulo:
-                obras.copias_obra[indice] = obra #tava sem copias_obra
+                futuraListaDeObras.copias_obra[indice] = obra #tava sem copias_obra
                 return True
         return False
         ...
