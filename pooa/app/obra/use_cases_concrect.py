@@ -14,6 +14,7 @@ from pooa.app.obra.use_cases_interfaces import (
 )
 from pooa.domain.obra import Obra, TipoSituacao
 from pooa.domain.obra import use_cases_interfaces
+from BD import Banco
 
 class CopiaObra(ICopiaObra):
     def __init__(self):
@@ -70,21 +71,66 @@ class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
             
 class CadastrarObraUseCase(ICadastrarObraUseCase):
     def cadastrarObra(self,obraNova) :
-        futuraListaDeObras = [] #lembrar de tirar - mexer com bd
-        if (obraNova not in futuraListaDeObras):    
-            futuraListaDeObras.append(obraNova)
-            return True
-        return False     
-        ...
+        #file = open("Banco.txt", "r+")
+        #file.close
+        #with open('Banco.txt','r') as rf:
+        with open("Banco.txt", "a+") as af:
+            Id = af.readline()
+            proxIsbn = af.readline()
+            #with open("Banco.txt", "a") as af:
+            af.write(obraNova.titulo)
+            af.write('\n')
+            af.write(obraNova.editora)
+            af.write('\n')
+            af.write(proxIsbn)
+            af.write('\n')
+            af.write(obraNova.autor)
+            af.write('\n')
+            af.write(obraNova.palavras_chave)
+            af.write('\n')
+            af.write(obraNova.data_publi)
+            af.write('\n')
+            af.write(obraNova.nro_paginas)
+            af.write('\n')
+            af.write(obraNova.categoria_obra)
+            af.write('\n')
+            #for indice in obraNova.copias_obra: PARTE DE CADASTRO DE COPIA OBRA
+                #af.write(Id+1)
+                #af.write(',')
+                #af.write(obraNova.copias_obra[indice].tipo_situacao)
+                #af.write('\n')
+            #af.write('-1\n')
+            
+            #rf.seek(len(proxId)+1)
+            #with open("Banco2.txt", "w") as wf: TESTE DE COMO TRATAR O ARQUIVO
+                #obraNova.
+                #for line in rf:
+                    #while(int(line) != -1):    
+                    #wf.write(line)
+                #print(line, end='')
+                #listaObras = fobj.read()
+        #futuraListaDeObras = [] #lembrar de tirar - mexer com bd
+        #if (obraNova not in futuraListaDeObras):    
+            #futuraListaDeObras.append(obraNova)
+            #return True
+        #return False
 
 
 class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
     def cadastrarCopiaObra(self,obra,novaCopia) -> int:
-        if (id not in copias_obra._id):#checar se essa comparação funciona
-            copias_obra.append(novaCopia)
-            return novaCopia.id
-        return -1    
-        ...
+        with open("Banco.txt", "a+") as af:
+            Id = af.readline()
+            for indice in obra.copias_obra:
+                af.write(Id+1)
+                af.write(',')
+                af.write(obra.copias_obra[indice].tipo_situacao)
+                af.write('\n')
+            af.write('-1\n')
+        
+        #if (id not in copias_obra._id):#checar se essa comparação funciona 
+            #copias_obra.append(novaCopia)
+            #return novaCopia.id
+        #return -1
 
 
 class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
