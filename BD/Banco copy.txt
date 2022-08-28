@@ -51,4 +51,7 @@
     24,1
     25,1
     26,1
-    -1
+    -1O Lobo de Wall Street
+Planeta
+30027
+Jordan Belfort

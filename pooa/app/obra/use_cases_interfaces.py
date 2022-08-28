@@ -31,7 +31,7 @@ class IConsultarCopiaObraSituacaoUseCase(ABC): #precisa desse ou do listar?
 
 class ICadastrarObraUseCase(ABC):
     @abstractmethod
-    def cadastrarObra(self) -> Obra:
+    def cadastrarObra(self,obraNova) -> Obra:
         pass
 
 

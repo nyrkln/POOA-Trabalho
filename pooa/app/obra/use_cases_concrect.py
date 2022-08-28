@@ -1,4 +1,5 @@
 from typing import List
+import os
 from pooa.app.obra.use_cases_interfaces import (
     IAlterarDadosCopiaObraUseCase,
     IAlterarDadosObraUseCase,
@@ -66,32 +67,40 @@ class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
                 
             
 class CadastrarObraUseCase(ICadastrarObraUseCase):
-    def cadastrarObra(self,obraNova) :
+    def cadastrarObra(obraNova) :
         #file = open("Banco.txt", "r+")
         #file.close
         #with open('Banco.txt','r') as rf:
-        with open("BD/id.txt", "r+") as f:
+        PlC = ""
+        with open(os.path.join("BD","id.txt"), "r+") as f:
             Id = int(f.readline())
             Isbn = int(f.readline())
-            f.write(Id)
-            f.write(Isbn+100)
-        with open("BD/Banco.txt", "a+") as af:
+            f.seek(0)
+            f.truncate(0)
+            f.write(str(Id))
+            f.write('\n')
+            Isbn = int(Isbn)+100
+            f.write(str(Isbn))
+            f.write('\n')
+        with open(os.path.join("BD","Banco.txt"), "a+") as af:
             #with open("Banco.txt", "a") as af:
             af.write(obraNova.titulo)
             af.write('\n')
             af.write(obraNova.editora)
             af.write('\n')
-            af.write(Isbn)
+            af.write(str(Isbn))
             af.write('\n')
             af.write(obraNova.autor)
             af.write('\n')
-            af.write(obraNova.palavras_chave)
+            for palavra in obraNova.palavras_chave:
+                PlC = PlC + palavra + ", "
+            af.write(PlC)
             af.write('\n')
-            af.write(obraNova.data_publi)
+            af.write(str(obraNova.data_publi))
             af.write('\n')
-            af.write(obraNova.nro_paginas)
+            af.write(str(obraNova.nro_paginas))
             af.write('\n')
-            af.write(obraNova.categoria_obra)
+            af.write(str(obraNova.categoria_obra))
             af.write('\n')
             #for indice in obraNova.copias_obra: PARTE DE CADASTRO DE COPIA OBRA
                 #af.write(Id+1)
@@ -117,7 +126,7 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
 
 class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
     def cadastrarCopiaObra(self,obra,novaCopia) -> int:
-        with open("BD/Banco.txt", "a+") as af:
+        with open(os.path.join("BD","Banco.txt"), "a+") as af:
             Id = af.readline()
             for indice in obra.copias_obra:
                 af.write(Id+1)
