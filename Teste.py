@@ -1,4 +1,4 @@
-from pooa.app.obra.use_cases_concrect import CadastrarObraUseCase
+import pooa.app.obra.use_cases_concrect
 from pooa.domain.obra import Obra
 import datetime
 

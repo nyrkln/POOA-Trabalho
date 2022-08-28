@@ -1,14 +1,14 @@
 """Defines obra abstract interfaces"""
 from abc import ABC, abstractmethod
 from typing import List
-from pooa.app.obra.use_cases_concrect import CopiaObra
+#from pooa.app.obra.use_cases_concrect import CopiaObra
 
 from pooa.domain.obra import Obra
 
 
 class IConsultarCopiaObraUseCase(ABC):
     @abstractmethod
-    def consultarCopiaObra(self) -> CopiaObra:
+    def consultarCopiaObra(self):
         pass
 
 
@@ -19,13 +19,13 @@ class IAlterarDadosObraUseCase(ABC):
 
 class IAlterarDadosCopiaObraUseCase(ABC):
     @abstractmethod
-    def alterarDadosCopiaObra(self) -> CopiaObra:
+    def alterarDadosCopiaObra(self):
         pass
 
 
 class IConsultarCopiaObraSituacaoUseCase(ABC): #precisa desse ou do listar?
     @abstractmethod
-    def consultarCopiaObraSituacao(self) -> List[CopiaObra]:
+    def consultarCopiaObraSituacao(self):
         pass
 
 
@@ -37,7 +37,7 @@ class ICadastrarObraUseCase(ABC):
 
 class ICadastrarCopiaObraUseCase(ABC):
     @abstractmethod
-    def cadastrarCopiaObra(self) -> CopiaObra:
+    def cadastrarCopiaObra(self):
         pass
 
 

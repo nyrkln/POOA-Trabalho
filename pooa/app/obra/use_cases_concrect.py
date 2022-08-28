@@ -13,8 +13,6 @@ from pooa.app.obra.use_cases_interfaces import (
     IReservarObraUseCase
 )
 from pooa.domain.obra import Atrasado, Disponivel, Emprestado, Obra, Reservado, TipoSituacao
-from pooa.domain.obra import use_cases_interfaces
-from BD import Banco
 
 class CopiaObra(ICopiaObra):
     def __init__(self):
@@ -72,12 +70,12 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
         #file = open("Banco.txt", "r+")
         #file.close
         #with open('Banco.txt','r') as rf:
-        with open("id.txt", "r+") as f:
+        with open("BD/id.txt", "r+") as f:
             Id = int(f.readline())
             Isbn = int(f.readline())
             f.write(Id)
             f.write(Isbn+100)
-        with open("Banco.txt", "a+") as af:
+        with open("BD/Banco.txt", "a+") as af:
             #with open("Banco.txt", "a") as af:
             af.write(obraNova.titulo)
             af.write('\n')
@@ -119,7 +117,7 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
 
 class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
     def cadastrarCopiaObra(self,obra,novaCopia) -> int:
-        with open("Banco.txt", "a+") as af:
+        with open("BD/Banco.txt", "a+") as af:
             Id = af.readline()
             for indice in obra.copias_obra:
                 af.write(Id+1)
