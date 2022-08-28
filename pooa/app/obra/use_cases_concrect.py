@@ -12,7 +12,7 @@ from pooa.app.obra.use_cases_interfaces import (
     IListarSituacaoCopiaObraUseCase,
     IReservarObraUseCase
 )
-from pooa.domain.obra import Obra, TipoSituacao
+from pooa.domain.obra import Atrasado, Disponivel, Emprestado, Obra, Reservado, TipoSituacao
 from pooa.domain.obra import use_cases_interfaces
 from BD import Banco
 
@@ -56,17 +56,15 @@ class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
     def consultarCopiaObraSituacao(self,obra) -> List[int]:
         situacao = []
         for obras in obra.copias_obra:
-            match obras.copias_obra._situacao:
-                case Disponivel:
+            if (obras.copias_obra._state == Disponivel):
                     situacao.append(1)
-                case Emprestado:
+            elif (obras.copias_obra._state == Emprestado):
                     situacao.append(2)
-                case Atrasado:
+            elif (obras.copias_obra._state == Atrasado):
                     situacao.append(3)
-                case Reservado:
+            elif (obras.copias_obra._state == Reservado):
                     situacao.append(4)
         return situacao
-
                 
             
 class CadastrarObraUseCase(ICadastrarObraUseCase):
@@ -137,14 +135,13 @@ class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
     def listarCopiaObraSituacao(self,obra) -> None:
         situacao = consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)#não tenho certeza se o parametro está certo
         for indice,estado in enumerate(situacao):
-            match estado:
-                case 1:
+            if(estado == 1):
                     print("Copia " + obra.copias_obra[indice]._id + "está disponivel") 
-                case 2:
+            elif(estado == 2):
                     print("Copia " + obra.copias_obra[indice]._id + "está emprestada") 
-                case 3:
+            elif(estado == 3):
                     print("Copia " + obra.copias_obra[indice]._id + "está atrasada") 
-                case 4:
+            elif(estado == 4):
                     print("Copia " + obra.copias_obra[indice]._id + "está reservada") 
         ...
 
