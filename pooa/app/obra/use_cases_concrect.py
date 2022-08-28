@@ -72,15 +72,18 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
         #file = open("Banco.txt", "r+")
         #file.close
         #with open('Banco.txt','r') as rf:
+        with open("id.txt", "r+") as f:
+            Id = int(f.readline())
+            Isbn = int(f.readline())
+            f.write(Id)
+            f.write(Isbn+100)
         with open("Banco.txt", "a+") as af:
-            Id = af.readline()
-            proxIsbn = af.readline()
             #with open("Banco.txt", "a") as af:
             af.write(obraNova.titulo)
             af.write('\n')
             af.write(obraNova.editora)
             af.write('\n')
-            af.write(proxIsbn)
+            af.write(Isbn)
             af.write('\n')
             af.write(obraNova.autor)
             af.write('\n')
