@@ -94,7 +94,7 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
             af.write(obraNova.autor)
             af.write('\n')
             for palavra in obraNova.palavras_chave:
-                PlC = PlC + palavra + ", "
+                PlC = PlC + palavra + ","
             af.write(PlC)
             af.write('\n')
             af.write(str(obraNova.data_publi))
@@ -124,18 +124,6 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
             #return True
         #return False
 
-
-class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
-    def cadastrarCopiaObra(self,obra,novaCopia) -> int:
-        with open(os.path.join("BD","Banco.txt"), "a+") as af:
-            Id = af.readline()
-            for indice in obra.copias_obra:
-                af.write(Id+1)
-                af.write(',')
-                af.write(obra.copias_obra[indice].tipo_situacao)
-                af.write('\n')
-            af.write('-1\n')
-
 class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
     def cadastrarCopiaObra(obra,novaCopia) -> int:
         contaLinhas = 0
@@ -152,30 +140,20 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
         f = open(os.path.join("BD","Banco.txt"),"r")
         conteudo = f.readlines()
         f.close()
-
         with open(os.path.join("BD","Banco.txt"), "r+") as rf:
             comparacao = str(rf.readline())
             contaLinhas = contaLinhas + 1
             while(str(comparacao) != (str(obra.isbn)+"\n") and len(comparacao) != 0):
-
                 comparacao = str(rf.readline())
                 contaLinhas = contaLinhas + 1
                 if comparacao.isdigit():
                     comparacao = int(comparacao)
-
-
         conteudo.insert(contaLinhas+5, str(Id)+",1"+'\n')
-
         f = open(os.path.join("BD","Banco.txt"), "w")
         conteudo = "".join(conteudo)
         f.write(conteudo)
         f.close()        
 
-
-
-
-
-            
         
         #if (id not in copias_obra._id):#checar se essa comparação funciona 
             #copias_obra.append(novaCopia)
