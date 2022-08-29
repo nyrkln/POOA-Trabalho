@@ -1,6 +1,6 @@
 
 from typing import List
-from pooa.app.obra.use_cases_concrect import CopiaObra
+from pooa.app.obra.use_cases_concrete import CopiaObra
 from pooa.app.obra.use_cases_interfaces import (
     IAlterarDadosObraUseCase,
     ICadastrarCopiaObraUseCase,

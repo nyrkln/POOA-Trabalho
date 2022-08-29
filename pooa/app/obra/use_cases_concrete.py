@@ -64,7 +64,7 @@ class AlterarDadosCopiaObraUseCase(IAlterarDadosCopiaObraUseCase):#não sei se �
         for indice,copia in enumerate(obra.copias_obra):
             if copia._id == copiaObra._id:
                 obra.copias_obra[indice] = copiaObra
-                return obra.copias_obra[indice].id
+                return obra.copias_obra[indice].id  
         return -1         
 
 
@@ -215,7 +215,7 @@ class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
         
 
 
-class ReservarObraUseCase(IReservarObraUseCase):
+class ReservarObraUseCase(IReservarObraUseCase):    #repensar lógica abaixo
     def reservarObra(self,obra) -> int:
         situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
         for indice,estado in enumerate(situacao): 
