@@ -28,7 +28,7 @@ from pooa.domain.obra import Atrasado, Disponivel, Emprestado, Obra, Reservado, 
 class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
     def consultarCopiaObra(self,obra,id):
         for copias in obra.copias_obra:
-            if (copias._id == id):
+            if (copias.id == id):
                 return copias
         return -1        # usar -1 como retorno?
         
@@ -68,11 +68,17 @@ class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
                 
             
 class CadastrarObraUseCase(ICadastrarObraUseCase):
-    def cadastrarObra(obraNova) :
+    def cadastrarObra(obraNova,futuraListaDeObras) :
         #file = open("Banco.txt", "r+")
         #file.close
         #with open('Banco.txt','r') as rf:
         PlC = ""
+        conteudo = []
+        for obras in futuraListaDeObras:
+            print("rodou")
+            if (int(obraNova.isbn) == int(obras.isbn)):
+                print("obra já cadastrada")
+                return -1
         with open(os.path.join("BD","id.txt"), "r+") as f:
             Id = int(f.readline())
             Isbn = int(f.readline())
@@ -83,10 +89,19 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
             Isbn = int(Isbn)+100
             f.write(str(Isbn))
             f.write('\n')
+        with open(os.path.join("BD","Banco.txt"), "r+") as bdf:
+            new_file_content = ""
+            for line in bdf:
+                stripped_line = line.strip()
+                new_line = stripped_line.replace("-5", str(obraNova.titulo))
+                new_file_content += new_line +"\n"
+                f.close()
+        writing_file = open(os.path.join("BD","Banco.txt"), "w")
+        writing_file.write(new_file_content)
+        writing_file.close()
+
         with open(os.path.join("BD","Banco.txt"), "a+") as af:
-            #with open("Banco.txt", "a") as af:
-            af.write(obraNova.titulo)
-            af.write('\n')
+            #af.write('\n')
             af.write(obraNova.editora)
             af.write('\n')
             af.write(str(Isbn))
@@ -103,6 +118,10 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
             af.write('\n')
             af.write(str(obraNova.categoria_obra))
             af.write('\n')
+            af.write('-1')
+            af.write('\n')
+            af.write('-5\n')
+            futuraListaDeObras.append(obraNova)
             #for indice in obraNova.copias_obra: PARTE DE CADASTRO DE COPIA OBRA
                 #af.write(Id+1)
                 #af.write(',')
@@ -148,6 +167,9 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
                 contaLinhas = contaLinhas + 1
                 if comparacao.isdigit():
                     comparacao = int(comparacao)
+                if(len(comparacao) == 0):
+                    print("obra não encontrada")
+                    return -1    
         conteudo.insert(contaLinhas+5, str(Id)+",1"+'\n')
         f = open(os.path.join("BD","Banco.txt"), "w")
         conteudo = "".join(conteudo)
