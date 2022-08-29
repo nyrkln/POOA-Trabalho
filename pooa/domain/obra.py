@@ -5,43 +5,9 @@ from datetime import date
 from enum import Enum
 from typing import List
 
+
 from pooa.shared.singleton import SingletonMeta
 
-class TipoSituacao:
-    def __init__(self):
-        self._state = Disponivel
-
-
-class Disponivel(TipoSituacao, metaclass=SingletonMeta):
-    def __init__(self, tipo_state: TipoSituacao):
-        self._tipo_state = tipo_state
-
-    def trocar_situacao(self):
-        self._tipo_state._state = self
-
-
-class Emprestado(TipoSituacao, metaclass=SingletonMeta):
-    def __init__(self, tipo_state: TipoSituacao):
-        self._tipo_state = tipo_state
-
-    def trocar_situacao(self):
-        self._tipo_state._state = self
-
-
-class Reservado(TipoSituacao, metaclass=SingletonMeta):
-    def __init__(self, tipo_state: TipoSituacao):
-        self._tipo_state = tipo_state
-
-    def trocar_situacao(self):
-        self._tipo_state._state = self
-
-
-class Atrasado(TipoSituacao, metaclass=SingletonMeta):
-    def __init__(self, tipo_state: TipoSituacao):
-        self._tipo_state = tipo_state
-
-    def trocar_situacao(self):
-        self._tipo_state._state = self
 
 @dataclass
 class Autor:
@@ -76,13 +42,33 @@ class CategoriaObra:
     taxa: float
     obra: TipoObra
 
-@dataclass
+#@dataclass
 class CopiaObra:
     id: int
-    _situacao: TipoSituacao = None
-    
-    def get_situacao(self):
-        return self._situacao
+    state: str
+    def __init__(self,id,id_situacao):
+        self.id = id
+        if(id_situacao == 1):
+            self.state = "Disponivel"
+        elif(id_situacao == 2):
+            self.state = "Emprestado" 
+        elif(id_situacao == 3):
+            self.state = "Atrasado" 
+        elif(id_situacao == 4):
+            self.state = "Reservado"
+    def get_state(self):
+        return self.state
+    def get_id(self):
+        return self.id
+    def mudar_state(self,situacao):
+        if(situacao == 1):
+            self.state = "Disponivel"
+        elif(situacao == 2):
+            self.state = "Emprestado" 
+        elif(situacao == 3):
+            self.state = "Atrasado" 
+        elif(situacao == 4):
+            self.state = "Reservado"       
 
 @dataclass
 class Obra:

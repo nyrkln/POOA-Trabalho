@@ -1,7 +1,7 @@
 from pickle import APPEND
-from pooa.app.obra.use_cases_concrect import CadastrarCopiaObraUseCase, CadastrarObraUseCase
+from pooa.app.obra.use_cases_concrect import CadastrarCopiaObraUseCase, CadastrarObraUseCase, ListarSituacaoCopiaObraUseCase
 from pooa.app.obra.use_cases_interfaces import ICopiaObra
-from pooa.domain.obra import Autor, Disponivel, Obra, CopiaObra
+from pooa.domain.obra import CopiaObra, Obra
 import datetime
 import os
 ListaDeObras = [] 
@@ -22,7 +22,7 @@ def leitorDeBanco(Lista):
         sinal = True
         while(sinal and str(proximo) != '-1\n'):
             base = str(proximo).split(",")
-            copiaBase = CopiaObra(int(base[0]))
+            copiaBase = CopiaObra(int(base[0]),int(base[1]))
             copias.append(copiaBase)
             proximo = rf.readline()
             if (str(proximo) == '-1\n'):
@@ -36,8 +36,12 @@ leitorDeBanco(ListaDeObras)
 #print(ListaDeObras[0])
 
 #date = datetime.date(2013, 1, 1)
-copia1Lobo = CopiaObra(1)
-copiasLoboDeWallStreet = [copia1Lobo]
+copia1Lobo = CopiaObra(1,1)
+copia2Lobo = CopiaObra(2,2)
+copia3Lobo = CopiaObra(3,3)
+copia4Lobo = CopiaObra(4,4)
+copiasLoboDeWallStreet = [copia1Lobo,copia2Lobo,copia3Lobo,copia4Lobo]
 LoboDeWallStreet = Obra('O Lobo de Wall Street', 'Planeta', 500, 'Jordan Belfort', ['biografia', 'suspense', 'anos 80'], datetime.date(2013, 1, 1), 501, 5, copiasLoboDeWallStreet)
 #CadastrarObraUseCase.cadastrarObra(LoboDeWallStreet,ListaDeObras)
-CadastrarCopiaObraUseCase.cadastrarCopiaObra(LoboDeWallStreet,copia1Lobo)
+#CadastrarCopiaObraUseCase.cadastrarCopiaObra(LoboDeWallStreet,copia1Lobo)
+ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(LoboDeWallStreet)

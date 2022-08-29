@@ -13,7 +13,7 @@ from pooa.app.obra.use_cases_interfaces import (
     IListarSituacaoCopiaObraUseCase,
     IReservarObraUseCase
 )
-from pooa.domain.obra import Atrasado, Disponivel, Emprestado, Obra, Reservado, TipoSituacao
+
 
 #class CopiaObra(ICopiaObra):
     #def __init__(self):
@@ -53,17 +53,17 @@ class AlterarDadosCopiaObraUseCase(IAlterarDadosCopiaObraUseCase):#não sei se �
 
 
 class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
-    def consultarCopiaObraSituacao(self,obra) -> List[int]:
+    def consultarCopiaObraSituacao(obra) -> List[int]:
         situacao = []
         for obras in obra.copias_obra:
-            if (obras.copias_obra._state == Disponivel):
+            if (obras.get_state() == 'Disponivel'):
                     situacao.append(1)
-            elif (obras.copias_obra._state == Emprestado):
+            elif (obras.get_state() == 'Emprestado'):
                     situacao.append(2)
-            elif (obras.copias_obra._state == Atrasado):
+            elif (obras.get_state() == 'Atrasado'):
                     situacao.append(3)
-            elif (obras.copias_obra._state == Reservado):
-                    situacao.append(4)
+            elif (obras.get_state() == 'Reservado'):
+                    situacao.append(4)      
         return situacao
                 
             
@@ -75,7 +75,6 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
         PlC = ""
         conteudo = []
         for obras in futuraListaDeObras:
-            print("rodou")
             if (int(obraNova.isbn) == int(obras.isbn)):
                 print("obra já cadastrada")
                 return -1
@@ -184,47 +183,49 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
 
 
 class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
-    def listarCopiaObraSituacao(self,obra) -> None:
-        situacao = consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)#não tenho certeza se o parametro está certo
+    def listarCopiaObraSituacao(obra):
+        situacao = []
+        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra)
+        print(situacao)
         for indice,estado in enumerate(situacao):
             if(estado == 1):
-                    print("Copia " + obra.copias_obra[indice]._id + "está disponivel") 
+                    print("Copia " + str(obra.copias_obra[indice].id) + " está disponivel") 
             elif(estado == 2):
-                    print("Copia " + obra.copias_obra[indice]._id + "está emprestada") 
+                    print("Copia " + str(obra.copias_obra[indice].id) + " está emprestada") 
             elif(estado == 3):
-                    print("Copia " + obra.copias_obra[indice]._id + "está atrasada") 
+                    print("Copia " + str(obra.copias_obra[indice].id) + " está atrasada") 
             elif(estado == 4):
-                    print("Copia " + obra.copias_obra[indice]._id + "está reservada") 
-        ...
+                    print("Copia " + str(obra.copias_obra[indice].id) + " está reservada") 
+        
 
 
 class ReservarObraUseCase(IReservarObraUseCase):
     def reservarObra(self,obra) -> int:
-        situacao = consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
+        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
         for indice,estado in enumerate(situacao): 
             if(estado == 1):
                 obra.copias_obra[indice].Reservado.trocar_situacao
-                return obra.copias_obra[indice]._id
+                return obra.copias_obra[indice].id
         return -1        
         ...
 
 class EmprestarObraUseCase(IEmprestarObraUseCase):
     def emprestarObra(self,obra) -> int:
-        situacao = consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
+        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
         for indice,estado in enumerate(situacao): 
             if(estado == 1):
                 obra.copias_obra[indice].Reservado.trocar_situacao
-                return obra.copias_obra[indice]._id
+                return obra.copias_obra[indice].id
         return -1  
         ...
 
 
 class DevolverObraUseCase(IDevolverObraUseCase):
     def devolverObra(self,obra,copiaObra) -> int:
-        situacao = consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
+        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
         for indice,estado in enumerate(situacao): 
-            if((obra.copias_obra[indice]._id == copiaObra._id) and (estado==3 or estado==4)):
+            if((obra.copias_obra[indice].id == copiaObra.id) and (estado==3 or estado==4)):
                 obra.copias_obra[indice].Disponivel.trocar_situacao
-                return obra.copias_obra[indice]._id
+                return obra.copias_obra[indice].id
         return -1  
         ...
