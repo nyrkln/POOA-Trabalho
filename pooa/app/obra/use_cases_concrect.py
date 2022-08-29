@@ -1,5 +1,6 @@
 from typing import List
 import os
+
 from pooa.app.obra.use_cases_interfaces import (
     IAlterarDadosCopiaObraUseCase,
     IAlterarDadosObraUseCase,
@@ -7,22 +8,36 @@ from pooa.app.obra.use_cases_interfaces import (
     ICadastrarObraUseCase,
     IConsultarCopiaObraSituacaoUseCase,
     IConsultarCopiaObraUseCase,
-    ICopiaObra,
     IDevolverObraUseCase,
     IEmprestarObraUseCase,
     IListarSituacaoCopiaObraUseCase,
     IReservarObraUseCase
 )
 
+def reescreve_bd(ListaDeObras):
+    PlC = ""
+    with open(os.path.join("BD","Banco.txt"), "w") as af:
+        for obraNova in ListaDeObras:    
+            af.write(obraNova.editora)
+            af.write('\n')
+            af.write(str(obraNova.isbn))
+            af.write('\n')
+            af.write(obraNova.autor)
+            af.write('\n')
+            for palavra in obraNova.palavras_chave:
+                PlC = PlC + palavra + ","
+            af.write(PlC)
+            af.write('\n')
+            af.write(str(obraNova.data_publi))
+            af.write('\n')
+            af.write(str(obraNova.nro_paginas))
+            af.write('\n')
+            af.write(str(obraNova.categoria_obra))
+            af.write('\n')
+            af.write('-1')
+            af.write('\n')
+        af.write('-5\n')
 
-#class CopiaObra(ICopiaObra):
-    #def __init__(self):
-    #    self._situacao: TipoSituacao = None
-    #    self._id: int = 0
-
-    #def get_situacao(self):
-    #    return self._situacao
-#    pass
 
 
 class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
@@ -35,10 +50,11 @@ class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
 
 
 class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):#não sei se é exatamente assim o funcionamento desejado
-    def alterarDadosObra(self,obra,futuraListaDeObras) -> bool:
+    def alterarDadosObra(obra,futuraListaDeObras) -> bool:
         for indice,obras in enumerate(futuraListaDeObras):
-            if obras.titulo == obra.titulo:
-                futuraListaDeObras.copias_obra[indice] = obra #tava sem copias_obra
+            if obras.isbn == obra.isbn:
+                futuraListaDeObras[indice] = obra 
+                reescreve_bd(futuraListaDeObras)
                 return True
         return False
         ...

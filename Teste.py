@@ -1,5 +1,5 @@
 from pickle import APPEND
-from pooa.app.obra.use_cases_concrect import CadastrarCopiaObraUseCase, CadastrarObraUseCase, ListarSituacaoCopiaObraUseCase
+from pooa.app.obra.use_cases_concrect import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, ListarSituacaoCopiaObraUseCase
 from pooa.app.obra.use_cases_interfaces import ICopiaObra
 from pooa.domain.obra import CopiaObra, Obra
 import datetime
@@ -41,7 +41,8 @@ copia2Lobo = CopiaObra(2,2)
 copia3Lobo = CopiaObra(3,3)
 copia4Lobo = CopiaObra(4,4)
 copiasLoboDeWallStreet = [copia1Lobo,copia2Lobo,copia3Lobo,copia4Lobo]
-LoboDeWallStreet = Obra('O Lobo de Wall Street', 'Planeta', 500, 'Jordan Belfort', ['biografia', 'suspense', 'anos 80'], datetime.date(2013, 1, 1), 501, 5, copiasLoboDeWallStreet)
+LoboDeWallStreet = Obra('O Lobo de Wall chato', 'Planeta', 500, 'Jordan Belfort', ['biografia', 'suspense', 'anos 80'], datetime.date(2013, 1, 1), 501, 5, copiasLoboDeWallStreet)
 #CadastrarObraUseCase.cadastrarObra(LoboDeWallStreet,ListaDeObras)
 #CadastrarCopiaObraUseCase.cadastrarCopiaObra(LoboDeWallStreet,copia1Lobo)
-ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(LoboDeWallStreet)
+#ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(LoboDeWallStreet)
+AlterarDadosObraUseCase.alterarDadosObra(LoboDeWallStreet,ListaDeObras)
