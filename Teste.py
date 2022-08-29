@@ -6,10 +6,9 @@ import datetime
 import os
 ListaDeObras = [] 
 def leitorDeBanco(Lista):
-    with open(os.path.join("BD","id.txt"), "r+") as rid:
-        proximo = str(rid.readline())
 
     with open(os.path.join("BD","Banco.txt"), "r") as rf:
+        proximo = str(rf.readline())
         while(proximo != '-5\n'):
             nome = proximo
             editora = str(rf.readline())
