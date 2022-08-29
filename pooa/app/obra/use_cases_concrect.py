@@ -15,17 +15,18 @@ from pooa.app.obra.use_cases_interfaces import (
 )
 from pooa.domain.obra import Atrasado, Disponivel, Emprestado, Obra, Reservado, TipoSituacao
 
-class CopiaObra(ICopiaObra):
-    def __init__(self):
-        self._situacao: TipoSituacao = None
-        self._id: int = 0
+#class CopiaObra(ICopiaObra):
+    #def __init__(self):
+    #    self._situacao: TipoSituacao = None
+    #    self._id: int = 0
 
-    def get_situacao(self):
-        return self._situacao
+    #def get_situacao(self):
+    #    return self._situacao
+#    pass
 
 
 class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
-    def consultarCopiaObra(self,obra,id) -> CopiaObra:
+    def consultarCopiaObra(self,obra,id):
         for copias in obra.copias_obra:
             if (copias._id == id):
                 return copias
@@ -134,6 +135,47 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
                 af.write(obra.copias_obra[indice].tipo_situacao)
                 af.write('\n')
             af.write('-1\n')
+
+class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
+    def cadastrarCopiaObra(obra,novaCopia) -> int:
+        contaLinhas = 0
+        Id = 0 
+        with open(os.path.join("BD","id.txt"), "r+") as rf:
+            Id = int(rf.readline())+1
+            Isbn = rf.readline()
+            rf.seek(0)
+            rf.truncate(0)
+            rf.write(str(Id))
+            rf.write('\n')
+            rf.write(str(Isbn))
+        
+        f = open(os.path.join("BD","Banco.txt"),"r")
+        conteudo = f.readlines()
+        f.close()
+
+        with open(os.path.join("BD","Banco.txt"), "r+") as rf:
+            comparacao = str(rf.readline())
+            contaLinhas = contaLinhas + 1
+            while(str(comparacao) != (str(obra.isbn)+"\n") and len(comparacao) != 0):
+
+                comparacao = str(rf.readline())
+                contaLinhas = contaLinhas + 1
+                if comparacao.isdigit():
+                    comparacao = int(comparacao)
+
+
+        conteudo.insert(contaLinhas+5, str(Id)+",1"+'\n')
+
+        f = open(os.path.join("BD","Banco.txt"), "w")
+        conteudo = "".join(conteudo)
+        f.write(conteudo)
+        f.close()        
+
+
+
+
+
+            
         
         #if (id not in copias_obra._id):#checar se essa comparação funciona 
             #copias_obra.append(novaCopia)

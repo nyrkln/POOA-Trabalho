@@ -79,7 +79,10 @@ class CategoriaObra:
 @dataclass
 class CopiaObra:
     id: int
-    tipo_situacao: TipoSituacao
+    _situacao: TipoSituacao = None
+    
+    def get_situacao(self):
+        return self._situacao
 
 @dataclass
 class Obra:
