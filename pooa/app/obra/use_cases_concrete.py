@@ -38,6 +38,8 @@ def reescreve_bd(ListaDeObras):
             af.write('\n')
         af.write('-5\n')
 
+def reescreve_bd2(CopiaObra):
+    ...
 
 
 class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
@@ -104,14 +106,15 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
             Isbn = int(Isbn)+100
             f.write(str(Isbn))
             f.write('\n')
+            
         with open(os.path.join("BD","Banco.txt"), "r+") as bdf:
             new_file_content = ""
             for line in bdf:
                 stripped_line = line.strip()
                 new_line = stripped_line.replace("-5", str(obraNova.titulo))
                 new_file_content += new_line +"\n"
-                f.close()
-        writing_file = open(os.path.join("BD","Banco.txt"), "w")
+                f.close() #NECESSARIO?
+        writing_file = open(os.path.join("BD","Banco.txt"), "w")  #CODIGO EXEMPLO??
         writing_file.write(new_file_content)
         writing_file.close()
 
