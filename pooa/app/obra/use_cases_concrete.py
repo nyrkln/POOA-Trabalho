@@ -15,32 +15,44 @@ from pooa.app.obra.use_cases_interfaces import (
 )
 
 def reescreve_bd(ListaDeObras):
-     for obraNova in ListaDeObras: 
-        with open(os.path.join("BD","Banco.txt"), "w") as af:
+    PlC = ""
+    with open(os.path.join("BD","Banco.txt"), "w") as af:
+        pass
+    for obraNova in ListaDeObras: 
+        with open(os.path.join("BD","Banco.txt"), "a+") as af:
             #af.write('\n')
+            af.write(obraNova.titulo)
             af.write(obraNova.editora)
-            af.write('\n')
-            af.write(str(obraNova.isbn))
-            af.write('\n')
+            af.write(str(obraNova.isbn)+'\n')
             af.write(obraNova.autor)
-            af.write('\n')
-            for palavra in obraNova.palavras_chave:
-                PlC = PlC + palavra + ","
+            for indice,palavra in enumerate(obraNova.palavras_chave):
+                if(len(obraNova.palavras_chave) != indice+1):    
+                    PlC = PlC + palavra + ","
+                else:
+                    PlC = PlC + palavra    
             af.write(PlC)
-            af.write('\n')
-            af.write(str(obraNova.data_publi))
+            af.write(str(obraNova.data_publi.strftime('%Y-%d-%m')))
             af.write('\n')
             af.write(str(obraNova.nro_paginas))
             af.write('\n')
             af.write(str(obraNova.categoria_obra))
             af.write('\n')
+            for copia in obraNova.copias_obra:
+                situacao = 0
+                if (copia.get_state() == 'Disponivel'):
+                    situacao = 1
+                elif (copia.get_state() == 'Emprestado'):
+                    situacao = 2
+                elif (copia.get_state() == 'Atrasado'):
+                    situacao = 3
+                elif (copia.get_state() == 'Reservado'):
+                    situacao = 4  
+                af.write(str(copia.id)+','+str(situacao)+'\n')
             af.write('-1')
             af.write('\n')
-        af.write('-5\n')
-
-def reescreve_bd2(CopiaObra):
-    ...
-
+        PlC = ""    
+    with open(os.path.join("BD","Banco.txt"), "a+") as af:
+        af.write('-5')
 
 class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
     def consultarCopiaObra(self,obra,id):
@@ -142,7 +154,7 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
             af.write('\n')
             af.write('-1')
             af.write('\n')
-            af.write('-5\n')
+            af.write('-5')#CHECARRRRR
             futuraListaDeObras.append(obraNova)
             #for indice in obraNova.copias_obra: PARTE DE CADASTRO DE COPIA OBRA
                 #af.write(Id+1)
@@ -247,8 +259,8 @@ class ReservarObraUseCase(IReservarObraUseCase):
                         numeroObra = indice2
                 listaDeObras[numeroObra].copias_obra[indice].state = 'Reservado'
                 print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está reservada")
+                reescreve_bd(listaDeObras)
                 return obra.copias_obra[indice].id
-                #falta gravar no banco, mas na execução atual já funciona
         return -1        
         ...
 
@@ -263,6 +275,7 @@ class EmprestarObraUseCase(IEmprestarObraUseCase):
                         numeroObra = indice2
                 listaDeObras[numeroObra].copias_obra[indice].state = 'Emprestado'
                 print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está emprestada")
+                reescreve_bd(listaDeObras)
                 return obra.copias_obra[indice].id
                 #falta gravar no banco, mas na execução atual já funciona
         return -1              
@@ -280,7 +293,7 @@ class DevolverObraUseCase(IDevolverObraUseCase):
                 if((listaDeObras[indice2].copias_obra[indice].id == idCopia) and (estado == 2 or estado == 3 or estado == 4)):
                     listaDeObras[numeroObra].copias_obra[indice].state = 'Disponivel'
                     print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está Disponivel")
+                    reescreve_bd(listaDeObras)
                     return obra.copias_obra[indice].id
-                    #falta gravar no banco, mas na execução atual já funciona
             return -1    
     
