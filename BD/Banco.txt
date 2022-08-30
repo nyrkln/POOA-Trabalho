@@ -47,6 +47,23 @@ classico,tematico,marcante,hipnotizante,
 20,1
 21,1
 -1
+biblia
+Planeta
+700
+Jordan Belfort
+biografia,suspense,anos 80,
+2013-01-01
+501
+5
+52,1
+51,1
+50,1
+49,2
+48,3
+47,4
+46,1
+45,1
+-1
 O Lobo de Wall Street
 Planeta
 500

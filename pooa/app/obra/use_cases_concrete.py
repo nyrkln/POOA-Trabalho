@@ -71,9 +71,13 @@ class AlterarDadosCopiaObraUseCase(IAlterarDadosCopiaObraUseCase):#não sei se �
 
 
 class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
-    def consultarCopiaObraSituacao(obra) -> List[int]:
+    def consultarCopiaObraSituacao(obra,listaDeObras) -> List[int]:
+        indiceBusca = 0
+        for indice,obras in enumerate(listaDeObras):
+            if(int(obra.isbn) == int(obras.isbn)):
+                indiceBusca = indice       
         situacao = []
-        for obras in obra.copias_obra:
+        for obras in listaDeObras[indiceBusca].copias_obra:
             if (obras.get_state() == 'Disponivel'):
                     situacao.append(1)
             elif (obras.get_state() == 'Emprestado'):
@@ -192,7 +196,8 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
         f = open(os.path.join("BD","Banco.txt"), "w")
         conteudo = "".join(conteudo)
         f.write(conteudo)
-        f.close()        
+        f.close()
+        obra.copias_obra.append(novaCopia)        
 
         
         #if (id not in copias_obra._id):#checar se essa comparação funciona 
@@ -202,19 +207,22 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
 
 
 class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
-    def listarCopiaObraSituacao(obra):
+    def listarCopiaObraSituacao(obra,listaDeObras):
+        indiceBusca = 0
+        for indice,obras in enumerate(listaDeObras):
+            if(int(obra.isbn) == int(obras.isbn)):
+                indiceBusca = indice       
         situacao = []
-        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra)
-        print(situacao)
+        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao):
             if(estado == 1):
-                    print("Copia " + str(obra.copias_obra[indice].id) + " está disponivel") 
+                    print("Copia " + str(listaDeObras[indiceBusca].copias_obra[indice].id) + " está disponivel") 
             elif(estado == 2):
-                    print("Copia " + str(obra.copias_obra[indice].id) + " está emprestada") 
+                    print("Copia " + str(listaDeObras[indiceBusca].copias_obra[indice].id) + " está emprestada") 
             elif(estado == 3):
-                    print("Copia " + str(obra.copias_obra[indice].id) + " está atrasada") 
+                    print("Copia " + str(listaDeObras[indiceBusca].copias_obra[indice].id) + " está atrasada") 
             elif(estado == 4):
-                    print("Copia " + str(obra.copias_obra[indice].id) + " está reservada") 
+                    print("Copia " + str(listaDeObras[indiceBusca].copias_obra[indice].id) + " está reservada") 
         
 
 
