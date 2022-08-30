@@ -15,9 +15,9 @@ from pooa.app.obra.use_cases_interfaces import (
 )
 
 def reescreve_bd(ListaDeObras):
-    PlC = ""
-    with open(os.path.join("BD","Banco.txt"), "w") as af:
-        for obraNova in ListaDeObras:    
+     for obraNova in ListaDeObras: 
+        with open(os.path.join("BD","Banco.txt"), "w") as af:
+            #af.write('\n')
             af.write(obraNova.editora)
             af.write('\n')
             af.write(str(obraNova.isbn))
@@ -51,10 +51,10 @@ class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
         
 
 
-class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):#não sei se é exatamente assim o funcionamento desejado
+class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):
     def alterarDadosObra(obra,futuraListaDeObras) -> bool:
         for indice,obras in enumerate(futuraListaDeObras):
-            if obras.isbn == obra.isbn:
+            if int(obras.isbn) == int(obra.isbn):
                 futuraListaDeObras[indice] = obra 
                 reescreve_bd(futuraListaDeObras)
                 return True
@@ -191,8 +191,18 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
                     comparacao = int(comparacao)
                 if(len(comparacao) == 0):
                     print("obra não encontrada")
-                    return -1    
-        conteudo.insert(contaLinhas+5, str(Id)+",1"+'\n')
+                    return -1
+            situacao = 0       
+            if (novaCopia.get_state() == 'Disponivel'):
+                    situacao = 1
+            elif (novaCopia.get_state() == 'Emprestado'):
+                    situacao = 2
+            elif (novaCopia.get_state() == 'Atrasado'):
+                    situacao = 3
+            elif (novaCopia.get_state() == 'Reservado'):
+                    situacao = 4       
+
+        conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+'\n')
         f = open(os.path.join("BD","Banco.txt"), "w")
         conteudo = "".join(conteudo)
         f.write(conteudo)
@@ -226,33 +236,51 @@ class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
         
 
 
-class ReservarObraUseCase(IReservarObraUseCase):    #repensar lógica abaixo
-    def reservarObra(self,obra) -> int:
-        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
+class ReservarObraUseCase(IReservarObraUseCase):   
+    def reservarObra(obra,listaDeObras) -> int:
+        numeroObra = 0
+        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao): 
             if(estado == 1):
-                obra.copias_obra[indice].Reservado.trocar_situacao
+                for indice2, conteudo in enumerate(listaDeObras):
+                    if(conteudo.isbn == obra.isbn):
+                        numeroObra = indice2
+                listaDeObras[numeroObra].copias_obra[indice].state = 'Reservado'
+                print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está reservada")
                 return obra.copias_obra[indice].id
+                #falta gravar no banco, mas na execução atual já funciona
         return -1        
         ...
 
 class EmprestarObraUseCase(IEmprestarObraUseCase):
-    def emprestarObra(self,obra) -> int:
-        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
+    def emprestarObra(obra,listaDeObras) -> int:
+        numeroObra = 0
+        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao): 
             if(estado == 1):
-                obra.copias_obra[indice].Reservado.trocar_situacao
+                for indice2, conteudo in enumerate(listaDeObras):
+                    if(conteudo.isbn == obra.isbn):
+                        numeroObra = indice2
+                listaDeObras[numeroObra].copias_obra[indice].state = 'Emprestado'
+                print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está emprestada")
                 return obra.copias_obra[indice].id
-        return -1  
+                #falta gravar no banco, mas na execução atual já funciona
+        return -1              
         ...
 
 
 class DevolverObraUseCase(IDevolverObraUseCase):
-    def devolverObra(self,obra,copiaObra) -> int:
-        situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(IConsultarCopiaObraSituacaoUseCase)
-        for indice,estado in enumerate(situacao): 
-            if((obra.copias_obra[indice].id == copiaObra.id) and (estado==3 or estado==4)):
-                obra.copias_obra[indice].Disponivel.trocar_situacao
-                return obra.copias_obra[indice].id
-        return -1  
-        ...
+    def devolverObra(obra,listaDeObras,idCopia) -> int:
+            numeroObra = 0
+            for indice2, conteudo in enumerate(listaDeObras):
+                if(conteudo.isbn == obra.isbn):
+                    numeroObra = indice2
+            situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
+            for indice,estado in enumerate(situacao): 
+                if((listaDeObras[indice2].copias_obra[indice].id == idCopia) and (estado == 2 or estado == 3 or estado == 4)):
+                    listaDeObras[numeroObra].copias_obra[indice].state = 'Disponivel'
+                    print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está Disponivel")
+                    return obra.copias_obra[indice].id
+                    #falta gravar no banco, mas na execução atual já funciona
+            return -1    
+    

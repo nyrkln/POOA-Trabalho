@@ -1,5 +1,5 @@
 from pickle import APPEND
-from pooa.app.obra.use_cases_concrete import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, ListarSituacaoCopiaObraUseCase
+from pooa.app.obra.use_cases_concrete import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, DevolverObraUseCase, EmprestarObraUseCase, ListarSituacaoCopiaObraUseCase, ReservarObraUseCase
 from pooa.app.obra.use_cases_interfaces import ICopiaObra
 from pooa.domain.obra import CopiaObra, Obra
 import datetime
@@ -34,14 +34,23 @@ def leitorDeBanco(Lista):
 
 leitorDeBanco(ListaDeObras)
 #for obras in ListaDeObras:
-copia1biblia = CopiaObra(1,1)
-copia2biblia = CopiaObra(2,1)
-copia3biblia = CopiaObra(3,3)
-copia4biblia = CopiaObra(4,4)
-copiasBiblia = [copia1biblia,copia2biblia,copia3biblia,copia4biblia]
-biblia = Obra('biblia', 'Planeta', 700, 'Jordan Belfort', ['biografia', 'suspense', 'anos 80'], datetime.date(2013, 1, 1), 501, 5, copiasBiblia)
-#CadastrarObraUseCase.cadastrarObra(biblia,ListaDeObras)
-#print(biblia.titulo)
-#CadastrarCopiaObraUseCase.cadastrarCopiaObra(biblia,copia3biblia)
-ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(biblia,ListaDeObras)
-#AlterarDadosObraUseCase.alterarDadosObra(biblia,ListaDeObras)
+copia1trabalho = CopiaObra(1,1)
+copia2trabalho = CopiaObra(1,2)
+copia3trabalho = CopiaObra(1,3)
+copia4trabalho = CopiaObra(1,4)
+copiasTrabalho = [copia1trabalho,copia2trabalho,copia3trabalho,copia4trabalho]
+testeState = Obra('teste do state', 'Ufscar', 400, 'Alunos', ['computação', 'inovação'], datetime.date(2013, 1, 1), 23, 4, copiasTrabalho)
+#trabalho_alterado = Obra('TrabalhoAcademicoPOO', 'Ufscar', 600, 'Alunos', ['computação', 'inovação'], datetime.date(2013, 1, 1), 23, 4, copiasTrabalho)
+#CadastrarObraUseCase.cadastrarObra(testeState,ListaDeObras)
+#CadastrarCopiaObraUseCase.cadastrarCopiaObra(testeState,copia1trabalho)
+#ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
+#print(ListaDeObras[5].titulo)
+#AlterarDadosObraUseCase.alterarDadosObra(trabalho_alterado,ListaDeObras)
+#print(ListaDeObras[5].titulo)
+ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
+ReservarObraUseCase.reservarObra(testeState,ListaDeObras)
+ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
+DevolverObraUseCase.devolverObra(testeState,ListaDeObras,81)
+ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
+EmprestarObraUseCase.emprestarObra(testeState,ListaDeObras)
+ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
