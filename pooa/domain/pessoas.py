@@ -21,7 +21,7 @@ class Categoria:
 
 
 @dataclass
-class CatLeitor:
+class CategoriaLeitor(Categoria):
     tipo: TipoLeitor
 
 
@@ -33,7 +33,7 @@ class TipoUsuario(Enum):
 
 
 @dataclass
-class Usario:
+class Usuario:
     nome: str
     cpf: str
     cep: str
@@ -42,3 +42,21 @@ class Usario:
     email: str
     usuario: TipoUsuario
     senha: str
+    
+@dataclass
+class Funcionario(Usuario):
+    identificacao: int
+    
+@dataclass
+class Leitor(Usuario):
+    grupoAcademico: bool
+    
+class UsuarioFactory:
+    def build_usuario(tipo_usuario):
+        if tipo_usuario == Funcionario:
+            return Funcionario()
+        if tipo_usuario == Leitor:
+            return Leitor()
+        print("Tipo Inválido")
+        return -1
+        

@@ -1,6 +1,5 @@
 
-from abc import ABC, abstractmethod
-
+from abc import ABC, abstractmethod, ABCMeta, abstractstaticmethod
 
 class IConsultarDisciplinasUseCase(ABC):
     @abstractmethod
@@ -18,3 +17,9 @@ class IAlterarDadosUsuarioUseCase(ABC):
     @abstractmethod
     def alterarDadosUsuario(self,usuario):
         ...
+
+class IUsuario(metaclass=ABCMeta):
+    @abstractstaticmethod
+    def usuario_method():
+        ...
+        

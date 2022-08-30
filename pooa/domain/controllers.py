@@ -85,10 +85,10 @@ class ControllerUser:
         self._alterar_dados_usuarios_use_case = alterar_dados_usuarios_use_case
 
     def consultar_disciplinas(self):
-        return self._consultar_disciplinas_use_case.execute()
+        return self._consultar_disciplinas_use_case.execute()  # Integração com o grupo 5
 
     def consultar_grupos_academicos(self):
-        return self._consultar_grupos_academicos_use_case.execute()
+        return self._consultar_grupos_academicos_use_case.execute() #Integração com o grupo 7
 
     def alterar_dados_usuarios(self):
         return self._alterar_dados_usuarios_use_case.execute()
