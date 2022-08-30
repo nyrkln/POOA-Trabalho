@@ -97,4 +97,17 @@ computação,inovação,
 4
 81,2
 -1
+teste do state
+Ufscar
+1000
+Alunos
+computação,inovação,
+2013-01-01
+23
+4
+85,4
+84,4
+83,2
+82,1
+-1
 -5

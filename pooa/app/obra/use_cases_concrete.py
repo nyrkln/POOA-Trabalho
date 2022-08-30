@@ -260,7 +260,8 @@ class ReservarObraUseCase(IReservarObraUseCase):
                 listaDeObras[numeroObra].copias_obra[indice].state = 'Reservado'
                 print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está reservada")
                 reescreve_bd(listaDeObras)
-                return obra.copias_obra[indice].id
+                return obra.copias_obra[indice].id    
+        print("Não existem obras desse título disponíveis")
         return -1        
         ...
 
@@ -278,6 +279,7 @@ class EmprestarObraUseCase(IEmprestarObraUseCase):
                 reescreve_bd(listaDeObras)
                 return obra.copias_obra[indice].id
                 #falta gravar no banco, mas na execução atual já funciona
+        print("Não existem obras desse título disponíveis")        
         return -1              
         ...
 
