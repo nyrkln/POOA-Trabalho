@@ -50,7 +50,7 @@ testeState = Obra('teste do state', 'Ufscar', 1000, 'Alunos', ['computação', '
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #ReservarObraUseCase.reservarObra(testeState,ListaDeObras)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
-DevolverObraUseCase.devolverObra(testeState,ListaDeObras,82)
+#DevolverObraUseCase.devolverObra(testeState,ListaDeObras,82)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #EmprestarObraUseCase.emprestarObra(testeState,ListaDeObras)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
