@@ -57,7 +57,7 @@ def leitorDeBancoObras(Lista):
         sinal = True
         while(sinal and str(proximo) != '-1\n'):
             base = str(proximo).split(",")
-            copiaBase = CopiaObra(int(base[0]),int(base[1]))
+            copiaBase = CopiaObra(int(base[0]),int(base[1]),str(base[2].strip('\n')))
             copias.append(copiaBase)
             proximo = rf.readline()
             if (str(proximo) == '-1\n'):
@@ -73,16 +73,17 @@ def leitorDeBancoObras(Lista):
 
 leitorDeBancoObras(ListaDeObras)
 leitorDeBancoPessoas(ListaDePessoas)
+leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,12,'matheus',41905743840,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
 #for obras in ListaDeObras:
-copia1trabalho = CopiaObra(1,1)
-copia2trabalho = CopiaObra(1,2)
-copia3trabalho = CopiaObra(1,3)
-copia4trabalho = CopiaObra(1,4)
+copia1trabalho = CopiaObra(1,1,-1)
+copia2trabalho = CopiaObra(1,2,ListaDePessoas[0][0])
+copia3trabalho = CopiaObra(1,3,leitor1)
+copia4trabalho = CopiaObra(1,4,leitor1)
 copiasTrabalho = [copia1trabalho,copia2trabalho,copia3trabalho,copia4trabalho]
-testeState = Obra('teste do state', 'Ufscar', 1000, 'Alunos', ['computação', 'inovação'], datetime.date(2013, 1, 1), 23, 4, copiasTrabalho)
+livro = Obra('se não eu quem vai fazer você feliz', 'abril', 1300, 'muie do chorão', ['computação', 'inovação'], datetime.date(2013, 1, 1), 23, 4, copiasTrabalho)
 #trabalho_alterado = Obra('TrabalhoAcademicoPOO', 'Ufscar', 600, 'Alunos', ['computação', 'inovação'], datetime.date(2013, 1, 1), 23, 4, copiasTrabalho)
-#CadastrarObraUseCase.cadastrarObra(testeState,ListaDeObras)
-#CadastrarCopiaObraUseCase.cadastrarCopiaObra(testeState,copia1trabalho)
+#CadastrarObraUseCase.cadastrarObra(livro,ListaDeObras)
+#CadastrarCopiaObraUseCase.cadastrarCopiaObra(livro,copia3trabalho)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #print(ListaDeObras[5].titulo)
 #AlterarDadosObraUseCase.alterarDadosObra(trabalho_alterado,ListaDeObras)
@@ -90,11 +91,11 @@ testeState = Obra('teste do state', 'Ufscar', 1000, 'Alunos', ['computação', '
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #ReservarObraUseCase.reservarObra(testeState,ListaDeObras)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
-#DevolverObraUseCase.devolverObra(testeState,ListaDeObras,82)
+DevolverObraUseCase.devolverObra(livro,ListaDeObras,103)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #EmprestarObraUseCase.emprestarObra(testeState,ListaDeObras)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
-leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,12,'matheus',41905743840,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
+#leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,12,'matheus',41905743840,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
 #print(leitor1.idGrupoAcademico)
-AdicionarUsuarioUseCase.adicionarUsuario(ListaDePessoas,leitor1)
+#AdicionarUsuarioUseCase.adicionarUsuario(ListaDePessoas,leitor1)
 #print(ListaDePessoas)

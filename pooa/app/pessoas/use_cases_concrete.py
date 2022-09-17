@@ -25,6 +25,7 @@ class AdicionarUsuarioUseCase(IAdicionarUsuarioUseCase):
             Id = int(Id)+100
             f.write(str(Id))
             f.write('\n')
+        pessoa.identificação = str(Id)    
             
         with open(os.path.join("BD","BancoPessoa.txt"), "r+") as bdf:
             new_file_content = ""

@@ -41,13 +41,16 @@ def reescreve_bd(ListaDeObras):
                 situacao = 0
                 if (copia.get_state() == 'Disponivel'):
                     situacao = 1
+                    af.write(str(copia.id)+','+str(situacao)+','+'-1'+'\n')
                 elif (copia.get_state() == 'Emprestado'):
                     situacao = 2
+                    af.write(str(copia.id)+','+str(situacao)+','+str(copia.locatario)+'\n')
                 elif (copia.get_state() == 'Atrasado'):
                     situacao = 3
+                    af.write(str(copia.id)+','+str(situacao)+','+str(copia.locatario)+'\n')
                 elif (copia.get_state() == 'Reservado'):
-                    situacao = 4  
-                af.write(str(copia.id)+','+str(situacao)+'\n')
+                    situacao = 4 
+                    af.write(str(copia.id)+','+str(situacao)+','+str(copia.locatario)+'\n') 
             af.write('-1')
             af.write('\n')
         PlC = ""    
@@ -119,6 +122,7 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
             Isbn = int(Isbn)+100
             f.write(str(Isbn))
             f.write('\n')
+            obraNova.id = Id
             
         with open(os.path.join("BD","Banco.txt"), "r+") as bdf:
             new_file_content = ""
@@ -190,8 +194,7 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
                     situacao = 3
             elif (novaCopia.get_state() == 'Reservado'):
                     situacao = 4       
-
-        conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+'\n')
+        conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario().identificador).strip()+'\n')
         f = open(os.path.join("BD","Banco.txt"), "w")
         conteudo = "".join(conteudo)
         f.write(conteudo)
