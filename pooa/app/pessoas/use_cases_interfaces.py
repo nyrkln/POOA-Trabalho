@@ -18,6 +18,11 @@ class IAlterarDadosUsuarioUseCase(ABC):
     def alterarDadosUsuario(self,usuario):
         ...
 
+class IAdicionarUsuarioUseCase(ABC):
+    @abstractmethod
+    def AdicionarUsuario(ListaDeUsuarios,pessoa):
+        ...        
+
 class IUsuario(metaclass=ABCMeta):
     @abstractstaticmethod
     def usuario_method():

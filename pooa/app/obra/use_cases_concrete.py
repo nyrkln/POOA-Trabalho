@@ -102,10 +102,7 @@ class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
                 
             
 class CadastrarObraUseCase(ICadastrarObraUseCase):
-    def cadastrarObra(obraNova,futuraListaDeObras) :
-        #file = open("Banco.txt", "r+")
-        #file.close
-        #with open('Banco.txt','r') as rf:
+    def cadastrarObra(obraNova,futuraListaDeObras):
         PlC = ""
         conteudo = []
         for obras in futuraListaDeObras:
@@ -154,28 +151,8 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
             af.write('\n')
             af.write('-1')
             af.write('\n')
-            af.write('-5')#CHECARRRRR
+            af.write('-5')
             futuraListaDeObras.append(obraNova)
-            #for indice in obraNova.copias_obra: PARTE DE CADASTRO DE COPIA OBRA
-                #af.write(Id+1)
-                #af.write(',')
-                #af.write(obraNova.copias_obra[indice].tipo_situacao)
-                #af.write('\n')
-            #af.write('-1\n')
-            
-            #rf.seek(len(proxId)+1)
-            #with open("Banco2.txt", "w") as wf: TESTE DE COMO TRATAR O ARQUIVO
-                #obraNova.
-                #for line in rf:
-                    #while(int(line) != -1):    
-                    #wf.write(line)
-                #print(line, end='')
-                #listaObras = fobj.read()
-        #futuraListaDeObras = [] #lembrar de tirar - mexer com bd
-        #if (obraNova not in futuraListaDeObras):    
-            #futuraListaDeObras.append(obraNova)
-            #return True
-        #return False
 
 class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
     def cadastrarCopiaObra(obra,novaCopia) -> int:

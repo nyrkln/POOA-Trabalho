@@ -1,11 +1,46 @@
 from pickle import APPEND
 from pooa.app.obra.use_cases_concrete import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, DevolverObraUseCase, EmprestarObraUseCase, ListarSituacaoCopiaObraUseCase, ReservarObraUseCase
 from pooa.app.obra.use_cases_interfaces import ICopiaObra
+from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase
 from pooa.domain.obra import CopiaObra, Obra
+from pooa.domain.pessoas import Usuario,UsuarioFactory,Funcionario,Administrador,Leitor,TipoUsuario
 import datetime
 import os
+from pooa.domain.pessoas import TipoUsuario, UsuarioFactory
 ListaDeObras = [] 
-def leitorDeBanco(Lista):
+ListaDePessoas = [[],[]]
+
+
+def leitorDeBancoPessoas(Lista):
+    rf = open(os.path.join("BD","BancoPessoa.txt"),"r")
+    proximo = str(rf.readline())
+    while(proximo != '-5'):
+        identificador = proximo
+        nome = str(rf.readline())
+        cpf = str(rf.readline())
+        cep = str(rf.readline())
+        data_nasc = datetime.datetime.strptime(str(rf.readline()),"%Y-%d-%m\n")
+        telefone = str(rf.readline())
+        email = str(rf.readline())
+        usuario = int(rf.readline())
+        senha = str(rf.readline())
+        if(usuario == 2):
+            parametro_dif = str(rf.readline())
+        elif(usuario == 3):
+            parametro_dif_bool = bool(str(rf.readline()))    
+            parametro_dif = str(rf.readline())
+        proximo = str(rf.readline())
+        proximo = str(rf.readline())    
+        cadastro = UsuarioFactory.build_usuario(TipoUsuario(usuario),identificador,nome,cpf,cep,data_nasc,telefone,email,senha,parametro_dif)    
+        if(usuario == 2):    
+            ListaDePessoas[0].append(cadastro)
+        elif(usuario == 3):
+            ListaDePessoas[1].append(cadastro)                
+    rf.close()
+
+
+
+def leitorDeBancoObras(Lista):
     rf = open(os.path.join("BD","Banco.txt"),"r")
     proximo = str(rf.readline())
     while(proximo != '-5'):
@@ -32,7 +67,12 @@ def leitorDeBanco(Lista):
         proximo = rf.readline()
     rf.close()
 
-leitorDeBanco(ListaDeObras)
+
+
+
+
+leitorDeBancoObras(ListaDeObras)
+leitorDeBancoPessoas(ListaDePessoas)
 #for obras in ListaDeObras:
 copia1trabalho = CopiaObra(1,1)
 copia2trabalho = CopiaObra(1,2)
@@ -54,3 +94,7 @@ testeState = Obra('teste do state', 'Ufscar', 1000, 'Alunos', ['computação', '
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #EmprestarObraUseCase.emprestarObra(testeState,ListaDeObras)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
+leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,12,'matheus',41905743840,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
+#print(leitor1.idGrupoAcademico)
+AdicionarUsuarioUseCase.adicionarUsuario(ListaDePessoas,leitor1)
+#print(ListaDePessoas)
