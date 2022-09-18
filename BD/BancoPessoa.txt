@@ -69,4 +69,16 @@ teste
 True
 769111
 -1
+11950
+pedro
+41905743842
+15061730
+2000-09-04
+17991353055
+othepaladini@gmail.com
+3
+teste
+True
+769111
+-1
 -5
