@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restplus import Api
 import os 
-port = int(os.environ.get('PORT', 5000)) 
+port2 = int(os.environ.get('PORT', 5000)) 
 class Server():
     def __init__(self):
         self.app = Flask(__name__)
@@ -14,6 +14,6 @@ class Server():
         self.app.run(
         debug=True,
         host='0.0.0.0',
-        port=port)
+        port=port2)
         
 server = Server()        
