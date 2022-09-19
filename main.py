@@ -1,3 +1,4 @@
+import os
 from server.instace import server
 from server.situacao import *
 
