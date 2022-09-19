@@ -14,5 +14,6 @@ class Server():
             host = '0.0.0.0',
             debug=True,
             port = port
-        )    
+        )
+            
 server = Server()        

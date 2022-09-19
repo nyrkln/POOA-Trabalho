@@ -90,7 +90,7 @@ def consultarPendencias(usuario):
 
 leitorDeBancoObras(ListaDeObras)
 leitorDeBancoPessoas(ListaDePessoas)
-leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,12,'matheus',41905743840,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
+leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,12050,'Kaline',41905743844,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
 #for obras in ListaDeObras:
 copia1trabalho = CopiaObra(1,1,-1)
 copia2trabalho = CopiaObra(1,2,ListaDePessoas[0][0])
@@ -110,7 +110,7 @@ livro = Obra('senhor dos aneis', 'abril',"1400" , 'J.R.R Tolkien', ['ficção', 
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #DevolverObraUseCase.devolverObra(livro,ListaDeObras,103)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
-#EmprestarObraUseCase.emprestarObra(testeState,ListaDeObras)
+EmprestarObraUseCase.emprestarObra(livro,ListaDeObras,leitor1)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11950,'pedro',41905743842,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
 #copia5trabalho = CopiaObra(1,2,ListaDePessoas[1][5])
