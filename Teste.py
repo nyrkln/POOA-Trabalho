@@ -7,6 +7,7 @@ from pooa.domain.pessoas import Usuario,UsuarioFactory,Funcionario,Administrador
 import datetime
 import os
 from pooa.domain.pessoas import TipoUsuario, UsuarioFactory
+
 ListaDeObras = [] 
 ListaDePessoas = [[],[]]
 
@@ -68,6 +69,22 @@ def leitorDeBancoObras(Lista):
     rf.close()
 
 
+def consultarPendencias(usuario):
+    identificador = '-1'
+    for pessoas in ListaDePessoas[0]:
+        if(str(usuario).strip() == str(pessoas.cpf).strip()):
+            identificador = str(pessoas.identificador).strip()
+
+    for pessoas in ListaDePessoas[1]:
+        if(str(usuario).strip() == str(pessoas.cpf).strip()):
+            identificador = str(pessoas.identificador).strip()
+    if(identificador == '-1'):
+        return False
+    for obras in ListaDeObras:
+        for copias in obras.copias_obra:
+            if (str(copias.locatario).strip() == str(identificador).strip()) and (copias.get_state() == 'Atrasado'):
+                return True
+    return False            
 
 
 
@@ -83,7 +100,7 @@ copiasTrabalho = [copia1trabalho,copia2trabalho,copia3trabalho,copia4trabalho]
 livro = Obra('senhor dos aneis', 'abril',"1400" , 'J.R.R Tolkien', ['ficção', 'aventura'], datetime.date(2013, 1, 1), 1200, 5, copiasTrabalho)
 #trabalho_alterado = Obra('TrabalhoAcademicoPOO', 'Ufscar', 600, 'Alunos', ['computação', 'inovação'], datetime.date(2013, 1, 1), 23, 4, copiasTrabalho)
 #CadastrarObraUseCase.cadastrarObra(livro,ListaDeObras)
-CadastrarCopiaObraUseCase.cadastrarCopiaObra(livro,copia2trabalho)
+#CadastrarCopiaObraUseCase.cadastrarCopiaObra(livro,copia2trabalho)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #print(ListaDeObras[5].titulo)
 #AlterarDadosObraUseCase.alterarDadosObra(trabalho_alterado,ListaDeObras)
@@ -104,3 +121,4 @@ CadastrarCopiaObraUseCase.cadastrarCopiaObra(livro,copia2trabalho)
 #print(leitor1.idGrupoAcademico)
 #AdicionarUsuarioUseCase.adicionarUsuario(ListaDePessoas,leitor1)
 #print(ListaDePessoas)
+#print(consultarPendencias('41905743842',ListaDeObras,ListaDePessoas))
