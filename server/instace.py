@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restplus import Api
 import os 
+port = int(os.environ.get('PORT', 5000)) 
 class Server():
     def __init__(self):
         self.app = Flask(__name__)
@@ -8,10 +9,11 @@ class Server():
         title='situação da pessoa',
         description='retorna a situação da pessoa',
         doc='/docs')
+       
     def run(self):
         self.app.run(
-        debug=False,
+        debug=True,
         host='0.0.0.0',
-        port=int(os.environ.get('PORT', 5000))
-        )    
+        port=port)
+        
 server = Server()        
