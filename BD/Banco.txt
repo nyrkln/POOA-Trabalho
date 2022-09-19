@@ -128,4 +128,17 @@ computação,inovação,
 91,1,-1
 90,1,-1
 -1
+senhor dos aneis
+abril
+1400
+J.R.R Tolkien
+ficção,aventura,
+2013-01-01
+1200
+5
+122,2,11050
+121,2,11050
+120,2,11050
+119,1,-1
+-1
 -5

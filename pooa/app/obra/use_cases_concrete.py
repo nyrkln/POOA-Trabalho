@@ -188,13 +188,16 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
             situacao = 0       
             if (novaCopia.get_state() == 'Disponivel'):
                     situacao = 1
+                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+',-1'+'\n')
             elif (novaCopia.get_state() == 'Emprestado'):
                     situacao = 2
+                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario().identificador).strip()+'\n')
             elif (novaCopia.get_state() == 'Atrasado'):
                     situacao = 3
+                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario().identificador).strip()+'\n')
             elif (novaCopia.get_state() == 'Reservado'):
-                    situacao = 4       
-        conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario().identificador).strip()+'\n')
+                    situacao = 4
+                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario().identificador).strip()+'\n')
         f = open(os.path.join("BD","Banco.txt"), "w")
         conteudo = "".join(conteudo)
         f.write(conteudo)
