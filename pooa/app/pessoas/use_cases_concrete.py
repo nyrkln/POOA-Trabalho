@@ -3,7 +3,8 @@ from pooa.app.pessoas.use_cases_interfaces import (
     IAdicionarUsuarioUseCase,
     IAlterarDadosUsuarioUseCase,
     IConsultarDisciplinasUseCase,
-    IConsultarGruposAcademicosUseCase
+    IConsultarGruposAcademicosUseCase,
+    IConsultarPendenciasUseCase
 )
 
 def reescreve_bd(ListaDePessoas):
@@ -138,6 +139,14 @@ class ConsultarDisciplinasUseCase(IConsultarDisciplinasUseCase):
 class ConsultarGruposAcademicosUseCase(IConsultarGruposAcademicosUseCase):
     def consultarGruposAcademicos(self,usuario):
         ...
+
+class ConsultarPendenciasUseCase(IConsultarPendenciasUseCase):
+    def consultarPendencias(usuario,listadeobras):
+        for obras in listadeobras:
+            for copias in obras.copias_obra:
+                if (str(copias.locatario).strip() == str(usuario.identificador).strip()) and (copias.get_state() == 'Atrasado'):
+                    return True
+        return False               
 
 
 class AlterarDadosUsuarioUseCase(IAlterarDadosUsuarioUseCase):

@@ -1,7 +1,7 @@
 from pickle import APPEND
 from pooa.app.obra.use_cases_concrete import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, DevolverObraUseCase, EmprestarObraUseCase, ListarSituacaoCopiaObraUseCase, ReservarObraUseCase
 from pooa.app.obra.use_cases_interfaces import ICopiaObra
-from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase
+from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, ConsultarPendenciasUseCase
 from pooa.domain.obra import CopiaObra, Obra
 from pooa.domain.pessoas import Usuario,UsuarioFactory,Funcionario,Administrador,Leitor,TipoUsuario
 import datetime
@@ -96,9 +96,11 @@ livro = Obra('se não eu quem vai fazer você feliz', 'abril', 1300, 'muie do ch
 #EmprestarObraUseCase.emprestarObra(testeState,ListaDeObras)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11950,'pedro',41905743842,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
-copia5trabalho = CopiaObra(1,2,ListaDePessoas[1][5])
-CadastrarCopiaObraUseCase.cadastrarCopiaObra(livro,copia5trabalho)
-#print(ListaDePessoas[1][5])
+#copia5trabalho = CopiaObra(1,2,ListaDePessoas[1][5])
+#CadastrarCopiaObraUseCase.cadastrarCopiaObra(livro,copia5trabalho)
+print(ListaDePessoas[1][5])
+print(ListaDeObras[7].copias_obra[0].state)
+print(ConsultarPendenciasUseCase.consultarPendencias(ListaDePessoas[1][5],ListaDeObras))
 #print(leitor1.idGrupoAcademico)
 #AdicionarUsuarioUseCase.adicionarUsuario(ListaDePessoas,leitor1)
 #print(ListaDePessoas)

@@ -229,7 +229,7 @@ class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
 
 
 class ReservarObraUseCase(IReservarObraUseCase):   
-    def reservarObra(obra,listaDeObras) -> int:
+    def reservarObra(obra,listaDeObras,locatario) -> int:
         numeroObra = 0
         situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao): 
@@ -238,6 +238,7 @@ class ReservarObraUseCase(IReservarObraUseCase):
                     if(conteudo.isbn == obra.isbn):
                         numeroObra = indice2
                 listaDeObras[numeroObra].copias_obra[indice].state = 'Reservado'
+                listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
                 print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está reservada")
                 reescreve_bd(listaDeObras)
                 return obra.copias_obra[indice].id    
@@ -246,7 +247,7 @@ class ReservarObraUseCase(IReservarObraUseCase):
         ...
 
 class EmprestarObraUseCase(IEmprestarObraUseCase):
-    def emprestarObra(obra,listaDeObras) -> int:
+    def emprestarObra(obra,listaDeObras,locatario) -> int:
         numeroObra = 0
         situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao): 
@@ -255,6 +256,7 @@ class EmprestarObraUseCase(IEmprestarObraUseCase):
                     if(conteudo.isbn == obra.isbn):
                         numeroObra = indice2
                 listaDeObras[numeroObra].copias_obra[indice].state = 'Emprestado'
+                listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
                 print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está emprestada")
                 reescreve_bd(listaDeObras)
                 return obra.copias_obra[indice].id
@@ -274,6 +276,7 @@ class DevolverObraUseCase(IDevolverObraUseCase):
             for indice,estado in enumerate(situacao): 
                 if((listaDeObras[indice2].copias_obra[indice].id == idCopia) and (estado == 2 or estado == 3 or estado == 4)):
                     listaDeObras[numeroObra].copias_obra[indice].state = 'Disponivel'
+                    listaDeObras[numeroObra].copias_obra[indice].locatario = '-1'
                     print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está Disponivel")
                     reescreve_bd(listaDeObras)
                     return obra.copias_obra[indice].id

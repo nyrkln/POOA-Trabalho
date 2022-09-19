@@ -5,6 +5,9 @@ class IConsultarDisciplinasUseCase(ABC):
     @abstractmethod
     def consultarDisciplina(self,usuario):
         ...
+class IConsultarPendenciasUseCase(ABC):
+    def consultarPendencias(usuario,listadeobras):
+        ...        
 
 
 class IConsultarGruposAcademicosUseCase(ABC):
