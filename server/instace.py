@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_restplus import Api
 class Server():
@@ -8,7 +9,10 @@ class Server():
         description='retorna a situação da pessoa',
         doc='/docs')
     def run(self):
+        port = int(os.environ.get("PORT",5000))
         self.app.run(
-            debug=True
+            host = '0.0.0.0',
+            debug=True,
+            port = port
         )    
 server = Server()        
