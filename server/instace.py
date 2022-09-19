@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restplus import Api
+import os 
 class Server():
     def __init__(self):
         self.app = Flask(__name__)
@@ -9,6 +10,8 @@ class Server():
         doc='/docs')
     def run(self):
         self.app.run(
-            debug=True
+        debug=True,
+        host='0.0.0.0',
+        port=int(os.environ.get('PORT', 5000))
         )    
 server = Server()        
