@@ -46,18 +46,25 @@ class CategoriaObra:
 class CopiaObra:
     id: int
     state: str
-    def __init__(self,id,id_situacao):
+    locatario: str
+    def __init__(self,id,id_situacao,locatario):
         self.id = id
         if(id_situacao == 1):
             self.state = "Disponivel"
+            self.locatario = '-1'
         elif(id_situacao == 2):
             self.state = "Emprestado" 
+            self.locatario = locatario
         elif(id_situacao == 3):
             self.state = "Atrasado" 
+            self.locatario = locatario
         elif(id_situacao == 4):
             self.state = "Reservado"
+            self.locatario = locatario
     def get_state(self):
         return self.state
+    def get_locatario(self):
+        return self.locatario 
     def get_id(self):
         return self.id
     def mudar_state(self,situacao):
