@@ -4,6 +4,6 @@ from server.situacao import *
 import os 
 
 
-port = int(os.environ.get('PORT', 5000)) 
+#port = int(os.environ.get('PORT', 5000)) 
 server.run()
 #server.run()
