@@ -90,10 +90,10 @@ def consultarPendencias(usuario):
 
 leitorDeBancoObras(ListaDeObras)
 leitorDeBancoPessoas(ListaDePessoas)
-leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,12050,'Kaline',41905743844,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
+leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11950,'gerson',41905743846,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)
 #for obras in ListaDeObras:
 copia1trabalho = CopiaObra(1,1,-1)
-copia2trabalho = CopiaObra(1,2,ListaDePessoas[0][0])
+copia2trabalho = CopiaObra(1,2,ListaDePessoas[1][0])
 copia3trabalho = CopiaObra(1,3,leitor1)
 copia4trabalho = CopiaObra(1,4,leitor1)
 copiasTrabalho = [copia1trabalho,copia2trabalho,copia3trabalho,copia4trabalho]
@@ -107,9 +107,9 @@ livro = Obra('senhor dos aneis', 'abril',"1400" , 'J.R.R Tolkien', ['ficção', 
 #print(ListaDeObras[5].titulo)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
-DevolverObraUseCase.devolverObra(livro,ListaDeObras,120)
+#DevolverObraUseCase.devolverObra(livro,ListaDeObras,120)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
-#EmprestarObraUseCase.emprestarObra(livro,ListaDeObras,leitor1)
+EmprestarObraUseCase.emprestarObra(livro,ListaDeObras,leitor1)
 #ReservarObraUseCase.reservarObra(livro,ListaDeObras,leitor1)
 #ListarSituacaoCopiaObraUseCase.listarCopiaObraSituacao(testeState,ListaDeObras)
 #leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11950,'pedro',41905743842,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',769111)

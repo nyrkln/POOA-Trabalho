@@ -257,8 +257,6 @@ class EmprestarObraUseCase(IEmprestarObraUseCase):
             if(estado == 1):
                 for indice2, conteudo in enumerate(listaDeObras):
                     if(int(conteudo.isbn) == int(obra.isbn)):
-                        print(conteudo.isbn)
-                        print(obra.isbn)
                         numeroObra = indice2
                         listaDeObras[numeroObra].copias_obra[indice].state = 'Emprestado'
                         listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
@@ -285,5 +283,6 @@ class DevolverObraUseCase(IDevolverObraUseCase):
                     print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está Disponivel")
                     reescreve_bd(listaDeObras)
                     return obra.copias_obra[indice].id
+            print("Cópia já estava disponível Disponivel")        
             return -1    
     
