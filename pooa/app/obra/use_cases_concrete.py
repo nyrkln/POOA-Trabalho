@@ -238,13 +238,13 @@ class ReservarObraUseCase(IReservarObraUseCase):
         for indice,estado in enumerate(situacao): 
             if(estado == 1):
                 for indice2, conteudo in enumerate(listaDeObras):
-                    if(conteudo.isbn == obra.isbn):
+                    if(int(conteudo.isbn) == int(obra.isbn)):
                         numeroObra = indice2
-                listaDeObras[numeroObra].copias_obra[indice].state = 'Reservado'
-                listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
-                print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está reservada")
-                reescreve_bd(listaDeObras)
-                return obra.copias_obra[indice].id    
+                        listaDeObras[numeroObra].copias_obra[indice].state = 'Reservado'
+                        listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
+                        print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está reservada")
+                        reescreve_bd(listaDeObras)
+                        return obra.copias_obra[indice].id    
         print("Não existem obras desse título disponíveis")
         return -1        
         ...
@@ -256,13 +256,15 @@ class EmprestarObraUseCase(IEmprestarObraUseCase):
         for indice,estado in enumerate(situacao): 
             if(estado == 1):
                 for indice2, conteudo in enumerate(listaDeObras):
-                    if(conteudo.isbn == obra.isbn):
+                    if(int(conteudo.isbn) == int(obra.isbn)):
+                        print(conteudo.isbn)
+                        print(obra.isbn)
                         numeroObra = indice2
-                listaDeObras[numeroObra].copias_obra[indice].state = 'Emprestado'
-                listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
-                print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está emprestada")
-                reescreve_bd(listaDeObras)
-                return obra.copias_obra[indice].id
+                        listaDeObras[numeroObra].copias_obra[indice].state = 'Emprestado'
+                        listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
+                        print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está emprestada")
+                        reescreve_bd(listaDeObras)
+                        return obra.copias_obra[indice].id
                 #falta gravar no banco, mas na execução atual já funciona
         print("Não existem obras desse título disponíveis")        
         return -1              
@@ -273,7 +275,7 @@ class DevolverObraUseCase(IDevolverObraUseCase):
     def devolverObra(obra,listaDeObras,idCopia) -> int:
             numeroObra = 0
             for indice2, conteudo in enumerate(listaDeObras):
-                if(conteudo.isbn == obra.isbn):
+                if(int(conteudo.isbn) == int(obra.isbn)):
                     numeroObra = indice2
             situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
             for indice,estado in enumerate(situacao): 
