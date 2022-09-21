@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from datetime import date
 from enum import Enum
 from typing import List
+from pooa.domain.pessoas import Usuario
 
 
 from pooa.shared.singleton import SingletonMeta
