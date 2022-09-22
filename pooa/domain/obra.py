@@ -48,20 +48,36 @@ class CopiaObra:
     id: int
     state: str
     locatario: str
-    def __init__(self,id,id_situacao,locatario):
+    data_locacao: date
+    data_devolucao: date
+    funcionario: str
+
+    def __init__(self,id,id_situacao,locatario,movimentacao):
         self.id = id
         if(id_situacao == 1):
             self.state = "Disponivel"
             self.locatario = '-1'
+            self.funcionario = None
+            self.data_devolucao = None
+            self.data_locacao = None
         elif(id_situacao == 2):
             self.state = "Emprestado" 
             self.locatario = locatario
+            self.funcionario = movimentacao[0]
+            self.data_devolucao = movimentacao[2]
+            self.data_locacao = movimentacao[1]
         elif(id_situacao == 3):
             self.state = "Atrasado" 
             self.locatario = locatario
+            self.funcionario = movimentacao[0]
+            self.data_devolucao = movimentacao[2]
+            self.data_locacao = movimentacao[1]
         elif(id_situacao == 4):
             self.state = "Reservado"
             self.locatario = locatario
+            self.funcionario = movimentacao[0]
+            self.data_devolucao = movimentacao[2]
+            self.data_locacao = movimentacao[1]
     def get_state(self):
         return self.state
     def get_locatario(self):

@@ -1,6 +1,8 @@
+import datetime
+from pickle import TRUE
 from typing import List
 import os
-
+from pooa.domain.pessoas import TipoUsuario
 from pooa.app.obra.use_cases_interfaces import (
     IAlterarDadosCopiaObraUseCase,
     IAlterarDadosObraUseCase,
@@ -47,16 +49,16 @@ def reescreve_bd(ListaDeObras):
                 situacao = 0
                 if (copia.get_state() == 'Disponivel'):
                     situacao = 1
-                    af.write(str(copia.id)+','+str(situacao).strip()+','+'-1'+'\n')
+                    af.write(str(copia.id)+','+str(situacao).strip()+','+'-1,-1,'+str(datetime.datetime.now().strftime('%Y-%d-%m'))+','+str(datetime.datetime.now().strftime('%Y-%d-%m'))+'\n')
                 elif (copia.get_state() == 'Emprestado'):
                     situacao = 2
-                    af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+'\n')
+                    af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
                 elif (copia.get_state() == 'Atrasado'):
                     situacao = 3
-                    af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+'\n')
+                    af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
                 elif (copia.get_state() == 'Reservado'):
                     situacao = 4 
-                    af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+'\n') 
+                    af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n') 
             af.write('-1')
             af.write('\n')
         PlC = ""    
@@ -223,16 +225,16 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
             situacao = 0       
             if (novaCopia.get_state() == 'Disponivel'):
                     situacao = 1
-                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+',-1'+'\n')
+                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+',-1,-1,'+str(datetime.datetime.now().strftime('%Y-%d-%m'))+','+str(datetime.datetime.now().strftime('%Y-%d-%m'))+'\n')
             elif (novaCopia.get_state() == 'Emprestado'):
                     situacao = 2
-                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario()).strip()+'\n')
+                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario()).strip()+','+str(novaCopia.funcionario)+','+str(novaCopia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(novaCopia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
             elif (novaCopia.get_state() == 'Atrasado'):
                     situacao = 3
-                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario()).strip()+'\n')
+                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario()).strip()+','+str(novaCopia.funcionario)+','+str(novaCopia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(novaCopia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
             elif (novaCopia.get_state() == 'Reservado'):
                     situacao = 4
-                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario()).strip()+'\n')
+                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario()).strip()+','+str(novaCopia.funcionario)+','+str(novaCopia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(novaCopia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
         f = open(os.path.join("BD","Banco.txt"), "w")
         conteudo = "".join(conteudo)
         f.write(conteudo)
@@ -262,16 +264,19 @@ class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
 
 
 class ReservarObraUseCase(IReservarObraUseCase):   
-    def reservarObra(obra,listaDeObras,locatario) -> int:
+    def reservarObra(obra,listaDeObras,locatario,funcionario) -> int:
         numeroObra = 0
         situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao): 
-            if(estado == 1):
+            if(estado == 1 and funcionario.usuario == TipoUsuario.FUNCIONARIO and locatario.grupoAcademico == True):
                 for indice2, conteudo in enumerate(listaDeObras):
                     if(int(conteudo.isbn) == int(obra.isbn)):
                         numeroObra = indice2
                         listaDeObras[numeroObra].copias_obra[indice].state = 'Reservado'
                         listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
+                        listaDeObras[numeroObra].copias_obra[indice].data_locacao = datetime.datetime.now()
+                        listaDeObras[numeroObra].copias_obra[indice].data_devolucao = listaDeObras[numeroObra].copias_obra[indice].data_locacao + datetime.timedelta(days=5)
+                        listaDeObras[numeroObra].copias_obra[indice].funcionario = funcionario.identificacao
                         print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está reservada")
                         reescreve_bd(listaDeObras)
                         return obra.copias_obra[indice].id    
@@ -280,20 +285,22 @@ class ReservarObraUseCase(IReservarObraUseCase):
         ...
 
 class EmprestarObraUseCase(IEmprestarObraUseCase):
-    def emprestarObra(obra,listaDeObras,locatario) -> int:
+    def emprestarObra(obra,listaDeObras,locatario,funcionario) -> int:
         numeroObra = 0
         situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao): 
-            if(estado == 1):
+            if(estado == 1 and funcionario.usuario == TipoUsuario.FUNCIONARIO and locatario.grupoAcademico == True):
                 for indice2, conteudo in enumerate(listaDeObras):
                     if(int(conteudo.isbn) == int(obra.isbn)):
                         numeroObra = indice2
                         listaDeObras[numeroObra].copias_obra[indice].state = 'Emprestado'
                         listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
+                        listaDeObras[numeroObra].copias_obra[indice].data_locacao = datetime.datetime.now()
+                        listaDeObras[numeroObra].copias_obra[indice].data_devolucao = listaDeObras[numeroObra].copias_obra[indice].data_locacao + datetime.timedelta(days=5)
+                        listaDeObras[numeroObra].copias_obra[indice].funcionario = funcionario.identificacao
                         print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está emprestada")
                         reescreve_bd(listaDeObras)
                         return obra.copias_obra[indice].id
-                #falta gravar no banco, mas na execução atual já funciona
         print("Não existem obras desse título disponíveis")        
         return -1              
         ...
@@ -308,8 +315,13 @@ class DevolverObraUseCase(IDevolverObraUseCase):
             situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
             for indice,estado in enumerate(situacao): 
                 if((listaDeObras[indice2].copias_obra[indice].id == idCopia) and (estado == 2 or estado == 3 or estado == 4)):
+                    if((datetime.date.today() - listaDeObras[numeroObra].copias_obra[indice].data_devolucao).days>0):
+                        print("o usuario deve "+str(int((datetime.date.today() - listaDeObras[numeroObra].copias_obra[indice].data_devolucao).days)*3)+" reais a biblioteca")
                     listaDeObras[numeroObra].copias_obra[indice].state = 'Disponivel'
                     listaDeObras[numeroObra].copias_obra[indice].locatario = '-1'
+                    listaDeObras[numeroObra].copias_obra[indice].data_locacao = None
+                    listaDeObras[numeroObra].copias_obra[indice].data_devolucao = None
+                    listaDeObras[numeroObra].copias_obra[indice].funcionario = None
                     print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está Disponivel")
                     reescreve_bd(listaDeObras)
                     return obra.copias_obra[indice].id

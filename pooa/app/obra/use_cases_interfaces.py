@@ -70,7 +70,7 @@ class IReservarObraUseCase(ABC):
 
 class IEmprestarObraUseCase(ABC):
     @abstractmethod
-    def emprestarObra(self) -> Obra: #realmente é tipo Obra? ou copia obra?
+    def emprestarObra(self) -> Obra: 
         pass
 
 
