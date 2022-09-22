@@ -22,8 +22,13 @@ class IAlterarDadosCopiaObraUseCase(ABC):
     def alterarDadosCopiaObra(self):
         pass
 
+class IConsultarObrasAtrasadasUseCase(ABC): 
+    @abstractmethod
+    def consultarObrasAtrasadas(listadeobras,listadepessoas):
+        pass    
 
-class IConsultarCopiaObraSituacaoUseCase(ABC): #precisa desse ou do listar?
+
+class IConsultarCopiaObraSituacaoUseCase(ABC): 
     @abstractmethod
     def consultarCopiaObraSituacao(self):
         pass
@@ -34,6 +39,10 @@ class ICadastrarObraUseCase(ABC):
     def cadastrarObra(self,obraNova) -> Obra:
         pass
 
+class IRemoverObraUseCase(ABC):
+    @abstractmethod
+    def removerObra(obra,listaDeObras) -> Obra:
+        pass
 
 class ICadastrarCopiaObraUseCase(ABC):
     @abstractmethod

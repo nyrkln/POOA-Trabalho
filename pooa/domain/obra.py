@@ -90,3 +90,4 @@ class Obra:
     nro_paginas: int
     categoria_obra: CategoriaObra
     copias_obra: List[CopiaObra]
+

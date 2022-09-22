@@ -11,7 +11,9 @@ from pooa.app.obra.use_cases_interfaces import (
     IDevolverObraUseCase,
     IEmprestarObraUseCase,
     IListarSituacaoCopiaObraUseCase,
-    IReservarObraUseCase
+    IReservarObraUseCase,
+    IRemoverObraUseCase,
+    IConsultarObrasAtrasadasUseCase
 )
 
 def reescreve_bd(ListaDeObras):
@@ -66,21 +68,48 @@ class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
         for copias in obra.copias_obra:
             if (copias.id == id):
                 return copias
-        return -1        # usar -1 como retorno?
+        return -1 
+class ConsultarObrasAtrasadasUseCase(IConsultarObrasAtrasadasUseCase): 
+    def consultarObrasAtrasadas(listadeobras,listadepessoas):
+        listadedevedores = []
+        listadeobrasatrasadas = []
+        listadeidentificadores = []
+        for obras in listadeobras:
+            for copias in obras.copias_obra:
+                if copias.get_state() == 'Atrasado':
+                    listadedevedores.append(copias.locatario)
+                    listadeobrasatrasadas.append(obras.titulo)
+                    listadeidentificadores.append(copias.id)      
+        for indice,devedores in enumerate(listadedevedores):    
+            for pessoas in listadepessoas[1]:
+                if str(devedores).strip() == str(pessoas.identificador).strip():
+                    print("a copia " + str(listadeidentificadores[indice]).strip()+" da obra: " + str(listadeobrasatrasadas[indice]).strip()+ " está atrasada, seu locatario é " + str(pessoas.nome).strip() + " seu telefone é " + str(pessoas.telefone).strip() + " e seu email é " + str(pessoas.email).strip())
+
         
 
-
 class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):
-    def alterarDadosObra(obra,futuraListaDeObras) -> bool:
-        for indice,obras in enumerate(futuraListaDeObras):
+    def alterarDadosObra(obra,ListaDeObras) -> bool:
+        for indice,obras in enumerate(ListaDeObras):
             if int(obras.isbn) == int(obra.isbn):
-                lista = futuraListaDeObras[indice].copias_obra
-                futuraListaDeObras[indice] = obra
-                futuraListaDeObras[indice].copias_obra = lista 
-                reescreve_bd(futuraListaDeObras)
+                lista = ListaDeObras[indice].copias_obra
+                ListaDeObras[indice] = obra
+                ListaDeObras[indice].copias_obra = lista 
+                reescreve_bd(ListaDeObras)
                 return True
         return False
         ...
+
+class RemoverObraUseCase(IRemoverObraUseCase):
+    def removerObra(obra,ListaDeObras) -> bool:
+        for indice,obras in enumerate(ListaDeObras):
+            if int(obras.isbn) == int(obra.isbn):
+                ListaDeObras.pop(indice)
+                reescreve_bd(ListaDeObras)
+                return True
+        return False
+        ...
+
+
 
 class AlterarDadosCopiaObraUseCase(IAlterarDadosCopiaObraUseCase):#não sei se é exatamente assim o funcionamento desejado
     def alterarDadosCopiaObra(self,copiaObra,obra)  -> int:

@@ -7,7 +7,10 @@ class IConsultarDisciplinasUseCase(ABC):
         ...
 class IConsultarPendenciasUseCase(ABC):
     def consultarPendencias(usuario,listadeobras):
-        ...        
+        ...
+class IConsultarLeitoresComPendenciasUseCase(ABC):
+    def consultarLeitoresComPendencias(listadeobras,listadepessoas):
+        ...                  
 
 
 class IConsultarGruposAcademicosUseCase(ABC):
@@ -15,10 +18,13 @@ class IConsultarGruposAcademicosUseCase(ABC):
     def consultarGruposAcademicos(self,usuario):
         ...
 
+class IRemoverUsuarioUseCase(ABC):
+    def removerUsuario(usuario,futuraListaDeUsuarios):
+        ...
 
 class IAlterarDadosUsuarioUseCase(ABC):
     @abstractmethod
-    def alterarDadosUsuario(self,usuario):
+    def alterarDadosUsuario(usuario,ListaDeUsuarios):
         ...
 
 class IAdicionarUsuarioUseCase(ABC):

@@ -4,7 +4,7 @@ from flask import Flask
 from flask import request
 from flask_restplus import Api,Resource
 from server.instace import server
-from Teste import leitorDeBancoPessoas,leitorDeBancoObras,consultarPendencias
+from execucao import leitorDeBancoPessoas,leitorDeBancoObras,consultarPendencias
 #teste
 app, api = server.app, server.api
 ListaDeObras = [] 
@@ -16,6 +16,7 @@ def listaNomesDeObras(listadeobras):
     for obras in listadeobras:
         nomesDeObras.append(obras.titulo.strip())
     return nomesDeObras    
+
 @api.route('/situacao',methods=['GET'])
 class situacao(Resource):
     def get(self):

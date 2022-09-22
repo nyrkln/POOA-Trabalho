@@ -59,14 +59,18 @@ class Administrador(Funcionario):
 class Leitor(Usuario):
     grupoAcademico: bool
     idGrupoAcademico: int
+    tipoLeitor: TipoLeitor
     def __init__(self,usuario_parametro,parametro_dif):
         Usuario.__init__(self,usuario_parametro.identificador,usuario_parametro.nome,usuario_parametro.cpf,usuario_parametro.cep,usuario_parametro.data_nasc,usuario_parametro.telefone,usuario_parametro.email,usuario_parametro.usuario,usuario_parametro.senha)
-        if parametro_dif == -1:
+        if parametro_dif[0] == -1:
             self.grupoAcademico = False
             self.idGrupoAcademico = -1
         else:
             self.grupoAcademico = True
-            self.idGrupoAcademico = parametro_dif
+            self.idGrupoAcademico = parametro_dif[0]
+        self.tipoLeitor = parametro_dif[1]
+
+
 
 
     
