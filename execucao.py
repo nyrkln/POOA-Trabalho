@@ -1,7 +1,7 @@
 from pickle import APPEND
 from pooa.app.obra.use_cases_concrete import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, DevolverObraUseCase, EmprestarObraUseCase, ListarSituacaoCopiaObraUseCase, ReservarObraUseCase,RemoverObraUseCase,ConsultarObrasAtrasadasUseCase
 from pooa.app.obra.use_cases_interfaces import ICopiaObra
-from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, ConsultarPendenciasUseCase,RemoverUsuarioUseCase,AlterarDadosUsuarioUseCase,ConsultarLeitoresComPendenciasUseCase
+from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, ConsultarPendenciasUseCase,RemoverUsuarioUseCase,AlterarDadosUsuarioUseCase,ConsultarLeitoresComPendenciasUseCase,ConsultarDisciplinasUseCase,ConsultarGruposAcademicosUseCase
 from pooa.domain.obra import CopiaObra, Obra
 from pooa.domain.pessoas import Usuario,UsuarioFactory,Funcionario,Administrador,Leitor,TipoUsuario,TipoLeitor
 import datetime
@@ -129,12 +129,11 @@ leitor2 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,None,'Valter',41905743
 #AlterarDadosUsuarioUseCase.alterarDadosUsuario(leitor2,ListaDePessoas)
 #ConsultarLeitoresComPendenciasUseCase.consultarLeitoresComPendencias(ListaDeObras,ListaDePessoas)
 #RemoverUsuarioUseCase.removerUsuario(leitor2,ListaDePessoas)
-print(leitor1.idGrupoAcademico)
-
-
-
-
-
+#print(leitor1.idGrupoAcademico)
+#ConsultarDisciplinasUseCase.consultarDisciplina(leitor1)#integraçao
+#ConsultarGruposAcademicosUseCase.consultarGruposAcademicos(leitor1)
+leitor3 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11750,'jonas',41905743832,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',[-1,TipoLeitor.ALUNO_GRADUACAO])
+#ConsultarGruposAcademicosUseCase.consultarGruposAcademicos(leitor3)
 
 
 

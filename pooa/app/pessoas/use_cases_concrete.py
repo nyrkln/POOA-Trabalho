@@ -145,8 +145,9 @@ class AdicionarUsuarioUseCase(IAdicionarUsuarioUseCase):
 
 
 class ConsultarDisciplinasUseCase(IConsultarDisciplinasUseCase):
-    def consultarDisciplina(self,usuario):
-        ... 
+    def consultarDisciplina(usuario):
+        print("o usuario "+str(usuario.identificador)+" está inscrito em "+str(usuario.materias)+" materias")
+
 class ConsultarLeitoresComPendenciasUseCase(IConsultarLeitoresComPendenciasUseCase):    
     def consultarLeitoresComPendencias(listadeobras,listadepessoas):
         listadedevedores = []
@@ -162,8 +163,11 @@ class ConsultarLeitoresComPendenciasUseCase(IConsultarLeitoresComPendenciasUseCa
 
 
 class ConsultarGruposAcademicosUseCase(IConsultarGruposAcademicosUseCase):
-    def consultarGruposAcademicos(self,usuario):
-        ...
+    def consultarGruposAcademicos(usuario):
+        if(usuario.grupoAcademico == True):
+            print("o usuario "+str(usuario.identificador)+" está inscrito no grupo academico "+str(usuario.idGrupoAcademico)+" materias")
+        else:
+            print("o usuario não está inscrito em um grupo academico")
 
 class ConsultarPendenciasUseCase(IConsultarPendenciasUseCase):
     def consultarPendencias(usuario,listadeobras):
