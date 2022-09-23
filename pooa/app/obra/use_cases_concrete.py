@@ -18,53 +18,6 @@ from pooa.app.obra.use_cases_interfaces import (
     IConsultarObrasAtrasadasUseCase
 )
 
-def reescreve_bd(ListaDeObras):
-    PlC = ""
-    with open(os.path.join("BD","Banco.txt"), "w") as af:
-        pass
-    for obraNova in ListaDeObras: 
-        with open(os.path.join("BD","Banco.txt"), "a+") as af:
-            #af.write('\n')
-            af.write(obraNova.titulo.strip())
-            af.write('\n')
-            af.write(obraNova.editora.strip())
-            af.write('\n')
-            af.write(str(obraNova.isbn)+'\n')
-            af.write(obraNova.autor.strip())
-            af.write('\n')
-            for indice,palavra in enumerate(obraNova.palavras_chave):
-                if(len(obraNova.palavras_chave) != indice+1):    
-                    PlC = PlC + palavra + ","
-                else:
-                    PlC = PlC + palavra    
-            af.write(PlC.strip())
-            af.write('\n')
-            af.write(str(obraNova.data_publi.strftime('%Y-%d-%m')).strip())
-            af.write('\n')
-            af.write(str(obraNova.nro_paginas).strip())
-            af.write('\n')
-            af.write(str(obraNova.categoria_obra).strip())
-            af.write('\n')
-            for copia in obraNova.copias_obra:
-                situacao = 0
-                if (copia.get_state() == 'Disponivel'):
-                    situacao = 1
-                    af.write(str(copia.id)+','+str(situacao).strip()+','+'-1,-1,'+str(datetime.datetime.now().strftime('%Y-%d-%m'))+','+str(datetime.datetime.now().strftime('%Y-%d-%m'))+'\n')
-                elif (copia.get_state() == 'Emprestado'):
-                    situacao = 2
-                    af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
-                elif (copia.get_state() == 'Atrasado'):
-                    situacao = 3
-                    af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
-                elif (copia.get_state() == 'Reservado'):
-                    situacao = 4 
-                    af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n') 
-            af.write('-1')
-            af.write('\n')
-        PlC = ""    
-    with open(os.path.join("BD","Banco.txt"), "a+") as af:
-        af.write('-5')
-
 class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
     def consultarCopiaObra(self,obra,id):
         for copias in obra.copias_obra:
@@ -87,8 +40,6 @@ class ConsultarObrasAtrasadasUseCase(IConsultarObrasAtrasadasUseCase):
                 if str(devedores).strip() == str(pessoas.identificador).strip():
                     print("a copia " + str(listadeidentificadores[indice]).strip()+" da obra: " + str(listadeobrasatrasadas[indice]).strip()+ " está atrasada, seu locatario é " + str(pessoas.nome).strip() + " seu telefone é " + str(pessoas.telefone).strip() + " e seu email é " + str(pessoas.email).strip())
 
-        
-
 class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):
     def alterarDadosObra(obra,ListaDeObras) -> bool:
         for indice,obras in enumerate(ListaDeObras):
@@ -96,21 +47,18 @@ class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):
                 lista = ListaDeObras[indice].copias_obra
                 ListaDeObras[indice] = obra
                 ListaDeObras[indice].copias_obra = lista 
-                reescreve_bd(ListaDeObras)
-                return True
-        return False
-        ...
+                print("operação bem sucedida")
+                return ListaDeObras
+        return ListaDeObras
 
 class RemoverObraUseCase(IRemoverObraUseCase):
     def removerObra(obra,ListaDeObras) -> bool:
         for indice,obras in enumerate(ListaDeObras):
             if int(obras.isbn) == int(obra.isbn):
                 ListaDeObras.pop(indice)
-                reescreve_bd(ListaDeObras)
-                return True
-        return False
-        ...
-
+                print("operação bem sucedida")
+                return ListaDeObras
+        return ListaDeObras
 
 
 class AlterarDadosCopiaObraUseCase(IAlterarDadosCopiaObraUseCase):#não sei se é exatamente assim o funcionamento desejado
@@ -142,104 +90,22 @@ class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
                 
             
 class CadastrarObraUseCase(ICadastrarObraUseCase):
-    def cadastrarObra(obraNova,futuraListaDeObras):
-        PlC = ""
-        conteudo = []
-        for obras in futuraListaDeObras:
+    def cadastrarObra(obraNova,ListaDeObras,isbn):
+        obraNova.isbn = isbn
+        for obras in ListaDeObras:
             if ((str(obraNova.titulo).strip() == str(obras.titulo).strip()) and (str(obraNova.nro_paginas).strip() == str(obras.nro_paginas).strip()) ):
                 print("obra já cadastrada")
-                return -1
-        with open(os.path.join("BD","id.txt"), "r+") as f:
-            Id = int(f.readline())
-            Isbn = int(f.readline())
-            f.seek(0)
-            f.truncate(0)
-            f.write(str(Id))
-            f.write('\n')
-            Isbn = int(Isbn)+100
-            f.write(str(Isbn))
-            f.write('\n')
-            obraNova.id = Id
-            
-        with open(os.path.join("BD","Banco.txt"), "r+") as bdf:
-            new_file_content = ""
-            for line in bdf:
-                stripped_line = line.strip()
-                new_line = stripped_line.replace("-5", str(obraNova.titulo))
-                new_file_content += new_line +"\n"
-                f.close() #NECESSARIO?
-        writing_file = open(os.path.join("BD","Banco.txt"), "w")  #CODIGO EXEMPLO??
-        writing_file.write(new_file_content)
-        writing_file.close()
-
-        with open(os.path.join("BD","Banco.txt"), "a+") as af:
-            #af.write('\n')
-            af.write(obraNova.editora)
-            af.write('\n')
-            af.write(str(Isbn))
-            af.write('\n')
-            af.write(obraNova.autor)
-            af.write('\n')
-            for palavra in obraNova.palavras_chave:
-                PlC = PlC + palavra + ","
-            af.write(PlC)
-            af.write('\n')
-            af.write(str(obraNova.data_publi))
-            af.write('\n')
-            af.write(str(obraNova.nro_paginas))
-            af.write('\n')
-            af.write(str(obraNova.categoria_obra))
-            af.write('\n')
-            af.write('-1')
-            af.write('\n')
-            af.write('-5')
-            futuraListaDeObras.append(obraNova)
+                return ListaDeObras
+        ListaDeObras.append(obraNova)
+        print("operação bem sucedida")
+        return ListaDeObras
 
 class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
-    def cadastrarCopiaObra(obra,novaCopia) -> int:
-        contaLinhas = 0
-        Id = 0 
-        with open(os.path.join("BD","id.txt"), "r+") as rf:
-            Id = int(rf.readline())+1
-            Isbn = rf.readline()
-            rf.seek(0)
-            rf.truncate(0)
-            rf.write(str(Id))
-            rf.write('\n')
-            rf.write(str(Isbn))
-        
-        f = open(os.path.join("BD","Banco.txt"),"r")
-        conteudo = f.readlines()
-        f.close()
-        with open(os.path.join("BD","Banco.txt"), "r+") as rf:
-            comparacao = str(rf.readline())
-            contaLinhas = contaLinhas + 1
-            while(str(comparacao) != (str(obra.isbn)+"\n") and len(comparacao) != 0):
-                comparacao = str(rf.readline())
-                contaLinhas = contaLinhas + 1
-                if comparacao.isdigit():
-                    comparacao = int(comparacao)
-                if(len(comparacao) == 0):
-                    print("obra não encontrada")
-                    return -1
-            situacao = 0       
-            if (novaCopia.get_state() == 'Disponivel'):
-                    situacao = 1
-                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+',-1,-1,'+str(datetime.datetime.now().strftime('%Y-%d-%m'))+','+str(datetime.datetime.now().strftime('%Y-%d-%m'))+'\n')
-            elif (novaCopia.get_state() == 'Emprestado'):
-                    situacao = 2
-                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario()).strip()+','+str(novaCopia.funcionario)+','+str(novaCopia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(novaCopia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
-            elif (novaCopia.get_state() == 'Atrasado'):
-                    situacao = 3
-                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario()).strip()+','+str(novaCopia.funcionario)+','+str(novaCopia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(novaCopia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
-            elif (novaCopia.get_state() == 'Reservado'):
-                    situacao = 4
-                    conteudo.insert(contaLinhas+5, str(Id)+","+str(situacao)+','+str(novaCopia.get_locatario()).strip()+','+str(novaCopia.funcionario)+','+str(novaCopia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(novaCopia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
-        f = open(os.path.join("BD","Banco.txt"), "w")
-        conteudo = "".join(conteudo)
-        f.write(conteudo)
-        f.close()
-        obra.copias_obra.append(novaCopia)        
+    def cadastrarCopiaObra(obra,novaCopia,id):
+        novaCopia.id = id
+        obra.copias_obra.append(novaCopia)
+        print("operação bem sucedida")
+        return obra        
 
         
 
@@ -278,11 +144,9 @@ class ReservarObraUseCase(IReservarObraUseCase):
                         listaDeObras[numeroObra].copias_obra[indice].data_devolucao = listaDeObras[numeroObra].copias_obra[indice].data_locacao + datetime.timedelta(days=5)
                         listaDeObras[numeroObra].copias_obra[indice].funcionario = funcionario.identificacao
                         print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está reservada")
-                        reescreve_bd(listaDeObras)
-                        return obra.copias_obra[indice].id    
+                        return listaDeObras   
         print("Não existem obras desse título disponíveis")
-        return -1        
-        ...
+        return listaDeObras        
 
 class EmprestarObraUseCase(IEmprestarObraUseCase):
     def emprestarObra(obra,listaDeObras,locatario,funcionario) -> int:
@@ -299,10 +163,9 @@ class EmprestarObraUseCase(IEmprestarObraUseCase):
                         listaDeObras[numeroObra].copias_obra[indice].data_devolucao = listaDeObras[numeroObra].copias_obra[indice].data_locacao + datetime.timedelta(days=5)
                         listaDeObras[numeroObra].copias_obra[indice].funcionario = funcionario.identificacao
                         print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está emprestada")
-                        reescreve_bd(listaDeObras)
-                        return obra.copias_obra[indice].id
+                        return listaDeObras
         print("Não existem obras desse título disponíveis")        
-        return -1              
+        return listaDeObras              
         ...
 
 
@@ -313,8 +176,8 @@ class DevolverObraUseCase(IDevolverObraUseCase):
                 if(int(conteudo.isbn) == int(obra.isbn)):
                     numeroObra = indice2
             situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
-            for indice,estado in enumerate(situacao): 
-                if((listaDeObras[indice2].copias_obra[indice].id == idCopia) and (estado == 2 or estado == 3 or estado == 4)):
+            for indice,estado in enumerate(situacao):
+                if((listaDeObras[numeroObra].copias_obra[indice].id == idCopia) and (estado == 2 or estado == 3 or estado == 4)):
                     if((datetime.date.today() - listaDeObras[numeroObra].copias_obra[indice].data_devolucao).days>0):
                         print("o usuario deve "+str(int((datetime.date.today() - listaDeObras[numeroObra].copias_obra[indice].data_devolucao).days)*3)+" reais a biblioteca")
                     listaDeObras[numeroObra].copias_obra[indice].state = 'Disponivel'
@@ -323,8 +186,7 @@ class DevolverObraUseCase(IDevolverObraUseCase):
                     listaDeObras[numeroObra].copias_obra[indice].data_devolucao = None
                     listaDeObras[numeroObra].copias_obra[indice].funcionario = None
                     print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está Disponivel")
-                    reescreve_bd(listaDeObras)
-                    return obra.copias_obra[indice].id
+                    return listaDeObras
             print("Cópia já estava disponível Disponivel")        
-            return -1    
+            return listaDeObras   
     

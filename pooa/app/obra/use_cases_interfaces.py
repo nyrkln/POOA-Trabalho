@@ -36,8 +36,8 @@ class IConsultarCopiaObraSituacaoUseCase(ABC):
 
 class ICadastrarObraUseCase(ABC):
     @abstractmethod
-    def cadastrarObra(self,obraNova) -> Obra:
-        pass
+    def cadastrarObra(obraNova,futuraListaDeObras) -> None:
+        ...
 
 class IRemoverObraUseCase(ABC):
     @abstractmethod
