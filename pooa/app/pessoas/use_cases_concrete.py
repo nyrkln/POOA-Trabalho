@@ -43,7 +43,6 @@ class ConsultarLeitoresComPendenciasUseCase(IConsultarLeitoresComPendenciasUseCa
                 if str(devedores).strip() == str(pessoas.identificador).strip():
                     print("o usuario "+pessoas.nome.strip()+" de cpf: " + str(pessoas.cpf).strip()+ " está em débito com a biblioteca")
 
-
 class ConsultarGruposAcademicosUseCase(IConsultarGruposAcademicosUseCase):
     def consultarGruposAcademicos(usuario):
         if(usuario.grupoAcademico == True):
@@ -58,7 +57,6 @@ class ConsultarPendenciasUseCase(IConsultarPendenciasUseCase):
                 if (str(copias.locatario).strip() == str(usuario.identificador).strip()) and (copias.get_state() == 'Atrasado'):
                     return True
         return False               
-
 
 class AlterarDadosUsuarioUseCase(IAlterarDadosUsuarioUseCase):
     def alterarDadosUsuario(usuario,listaDeUsuarios):

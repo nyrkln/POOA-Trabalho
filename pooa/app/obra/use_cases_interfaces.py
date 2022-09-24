@@ -1,80 +1,60 @@
 """Defines obra abstract interfaces"""
 from abc import ABC, abstractmethod
 from typing import List
-#from pooa.app.obra.use_cases_concrect import CopiaObra
-
-from pooa.domain.obra import Obra
+from pooa.domain.obra import Obra, CopiaObra
 
 
 class IConsultarCopiaObraUseCase(ABC):
     @abstractmethod
-    def consultarCopiaObra(self):
+    def consultarCopiaObra(obra,id) -> CopiaObra:
         pass
-
 
 class IAlterarDadosObraUseCase(ABC):
     @abstractmethod
     def alterarDadosObra(self) -> Obra:
         pass
 
-class IAlterarDadosCopiaObraUseCase(ABC):
-    @abstractmethod
-    def alterarDadosCopiaObra(self):
-        pass
-
 class IConsultarObrasAtrasadasUseCase(ABC): 
     @abstractmethod
-    def consultarObrasAtrasadas(listadeobras,listadepessoas):
+    def consultarObrasAtrasadas(listadeobras,listadepessoas) -> None:
         pass    
-
 
 class IConsultarCopiaObraSituacaoUseCase(ABC): 
     @abstractmethod
-    def consultarCopiaObraSituacao(self):
+    def consultarCopiaObraSituacao(obra,listaDeObras) -> List[int]:
         pass
-
 
 class ICadastrarObraUseCase(ABC):
     @abstractmethod
-    def cadastrarObra(obraNova,futuraListaDeObras) -> None:
-        ...
+    def cadastrarObra(obraNova,futuraListaDeObras, id) -> list:
+        pass
 
 class IRemoverObraUseCase(ABC):
     @abstractmethod
-    def removerObra(obra,listaDeObras) -> Obra:
+    def removerObra(obra,listaDeObras) -> List:
         pass
 
 class ICadastrarCopiaObraUseCase(ABC):
     @abstractmethod
-    def cadastrarCopiaObra(self):
+    def cadastrarCopiaObra(obra,novaCopia,id) -> Obra:
         pass
-
 
 class IListarSituacaoCopiaObraUseCase(ABC):
     @abstractmethod
-    def listarCopiaObraSituacao(self) -> None:
+    def listarCopiaObraSituacao(obra,listaDeObras) -> None:
         pass
-
-
-class ICopiaObra(ABC):
-    @abstractmethod
-    def criar_obra(self) -> Obra:
-        pass
-
 
 class IReservarObraUseCase(ABC):
     @abstractmethod
-    def reservarObra(self) -> Obra: 
+    def reservarObra(obra,listaDeObras,locatario,funcionario) -> list: 
         pass
-
 
 class IEmprestarObraUseCase(ABC):
     @abstractmethod
-    def emprestarObra(self) -> Obra: 
+    def emprestarObra(obra,listaDeObras,locatario,funcionario) -> list: 
         pass
-
 
 class IDevolverObraUseCase(ABC):
     @abstractmethod
-    def devolverObra(self) -> Obra:
+    def devolverObra(obra,listaDeObras,idCopia) -> list:
         pass

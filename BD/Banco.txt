@@ -32,12 +32,11 @@ ficção,aventura
 -1
 Sapiens
 abril
-1900
+207
 Yuval Harari
-Historia,cientifico,intrigante
+Historia,cientifico
 2011-01-01
 459
 5
-141,1,-1,-1,2022-23-09,2022-23-09
 -1
 -5

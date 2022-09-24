@@ -103,20 +103,21 @@ class ReescreveBancoObrassUseCase(IReescreveBanco):
                 af.write('\n')
                 af.write(str(obraNova.categoria_obra).strip())
                 af.write('\n')
-                for copia in obraNova.copias_obra:
-                    situacao = 0
-                    if (copia.get_state() == 'Disponivel'):
-                        situacao = 1
-                        af.write(str(copia.id)+','+str(situacao).strip()+','+'-1,-1,'+str(datetime.datetime.now().strftime('%Y-%d-%m'))+','+str(datetime.datetime.now().strftime('%Y-%d-%m'))+'\n')
-                    elif (copia.get_state() == 'Emprestado'):
-                        situacao = 2
-                        af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
-                    elif (copia.get_state() == 'Atrasado'):
-                        situacao = 3
-                        af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
-                    elif (copia.get_state() == 'Reservado'):
-                        situacao = 4 
-                        af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n') 
+                if not (obraNova.copias_obra == None):
+                    for copia in obraNova.copias_obra:
+                        situacao = 0
+                        if (copia.get_state() == 'Disponivel'):
+                            situacao = 1
+                            af.write(str(copia.id)+','+str(situacao).strip()+','+'-1,-1,'+str(datetime.datetime.now().strftime('%Y-%d-%m'))+','+str(datetime.datetime.now().strftime('%Y-%d-%m'))+'\n')
+                        elif (copia.get_state() == 'Emprestado'):
+                            situacao = 2
+                            af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
+                        elif (copia.get_state() == 'Atrasado'):
+                            situacao = 3
+                            af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n')
+                        elif (copia.get_state() == 'Reservado'):
+                            situacao = 4 
+                            af.write(str(copia.id)+','+str(situacao).strip()+','+str(copia.locatario).strip()+','+str(copia.funcionario)+','+str(copia.data_locacao.strftime('%Y-%d-%m')).strip()+','+str(copia.data_devolucao.strftime('%Y-%d-%m')).strip()+'\n') 
                 af.write('-1')
                 af.write('\n')
             PlC = ""    

@@ -6,7 +6,7 @@ from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, Consult
 from pooa.domain.obra import CopiaObra, Obra
 from pooa.domain.pessoas import Usuario,UsuarioFactory,Funcionario,Administrador,Leitor,TipoUsuario,TipoLeitor
 from pooa.app.banco.use_cases_concrete import LeitorBancoObraUseCase,LeitorBancoPessoaUseCase,ReescreveBancoObrassUseCase,ReescreveBancoPessoasUseCase,RequisicaoIdCopiaObraUseCase,RequisicaoIdObraUseCase,RequisicaoIdPessoaUseCase
-
+from pooa.adapters.controllers import ControllerCadastrarObra
 
 ListaDeObras = [] 
 ListaDePessoas = [[],[]]
@@ -19,6 +19,9 @@ ListaDePessoas = LeitorBancoPessoaUseCase.leitorBanco(ListaDePessoas)
 livro = Obra('Sapiens','abril',None, 'Yuval Harari', ['Historia', 'cientifico'], datetime.date(2011, 1, 1), 459, 5, None)
 leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11950,'joao',41905743896,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',[769111,TipoLeitor.ALUNO_GRADUACAO])
 funcionario1 = UsuarioFactory.build_usuario(TipoUsuario.FUNCIONARIO,12450,'balconista',41905743877,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',12450)
+
+
+ListaDeObras = ControllerCadastrarObra(CadastrarObraUseCase).cadastrar_obra(livro,ListaDeObras,RequisicaoIdCopiaObraUseCase.requisicaoId())
 
 copia1 = CopiaObra(1,1,-1,[1,datetime.date(2013, 1, 1),datetime.date(2013, 1, 1)])
 copia2 = CopiaObra(1,2,ListaDePessoas[1][0].identificador,[funcionario1.identificador,datetime.date(2013, 1, 1),datetime.date(2013, 1, 1)])
@@ -47,9 +50,9 @@ livro = Obra('Sapiens','abril',"1800" , 'Yuval Harari', ['Historia', 'cientifico
 
 leitor2 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,None,'Valter',41905743950,15061730,datetime.date(2000, 9, 4),17991353055,'valter@ufscar.com','teste',[704030,TipoLeitor.PROFESSOR])
 #funcionario2 = 
-ListaDePessoas = AdicionarUsuarioUseCase.adicionarUsuario(ListaDePessoas,leitor2,RequisicaoIdPessoaUseCase.requisicaoId())
-ListaDeObras = CadastrarObraUseCase.cadastrarObra(livro,ListaDeObras,RequisicaoIdObraUseCase.requisicaoId())
-ListaDeObras[2] = CadastrarCopiaObraUseCase.cadastrarCopiaObra(ListaDeObras[2],copia1,RequisicaoIdCopiaObraUseCase.requisicaoId())
+#ListaDePessoas = AdicionarUsuarioUseCase.adicionarUsuario(ListaDePessoas,leitor2,RequisicaoIdPessoaUseCase.requisicaoId())
+#ListaDeObras = CadastrarObraUseCase.cadastrarObra(livro,ListaDeObras,RequisicaoIdObraUseCase.requisicaoId())
+#ListaDeObras[2] = CadastrarCopiaObraUseCase.cadastrarCopiaObra(ListaDeObras[2],copia1,RequisicaoIdCopiaObraUseCase.requisicaoId())
 
 #leitor2 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,None,'Valter',41905743950,15061745,datetime.date(2000, 9, 4),17991353055,'valter@ufscar.com','teste',[704030,TipoLeitor.PROFESSOR])
 #AlterarDadosUsuarioUseCase.alterarDadosUsuario(leitor2,ListaDePessoas)

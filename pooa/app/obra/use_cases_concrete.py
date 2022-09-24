@@ -1,4 +1,5 @@
 import datetime
+from pooa.domain.obra import Obra, CopiaObra
 from pickle import TRUE
 from typing import List
 import os
@@ -19,13 +20,14 @@ from pooa.app.obra.use_cases_interfaces import (
 )
 
 class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
-    def consultarCopiaObra(self,obra,id):
+    def consultarCopiaObra(obra,id) -> CopiaObra:
         for copias in obra.copias_obra:
             if (copias.id == id):
                 return copias
         return -1 
+
 class ConsultarObrasAtrasadasUseCase(IConsultarObrasAtrasadasUseCase): 
-    def consultarObrasAtrasadas(listadeobras,listadepessoas):
+    def consultarObrasAtrasadas(listadeobras,listadepessoas) -> None:
         listadedevedores = []
         listadeobrasatrasadas = []
         listadeidentificadores = []
@@ -52,23 +54,13 @@ class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):
         return ListaDeObras
 
 class RemoverObraUseCase(IRemoverObraUseCase):
-    def removerObra(obra,ListaDeObras) -> bool:
+    def removerObra(obra,ListaDeObras) -> list:
         for indice,obras in enumerate(ListaDeObras):
             if int(obras.isbn) == int(obra.isbn):
                 ListaDeObras.pop(indice)
                 print("operação bem sucedida")
                 return ListaDeObras
-        return ListaDeObras
-
-
-class AlterarDadosCopiaObraUseCase(IAlterarDadosCopiaObraUseCase):#não sei se é exatamente assim o funcionamento desejado
-    def alterarDadosCopiaObra(self,copiaObra,obra)  -> int:
-        for indice,copia in enumerate(obra.copias_obra):
-            if copia._id == copiaObra._id:
-                obra.copias_obra[indice] = copiaObra
-                return obra.copias_obra[indice].id  
-        return -1         
-
+        return ListaDeObras  
 
 class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
     def consultarCopiaObraSituacao(obra,listaDeObras) -> List[int]:
@@ -87,8 +79,7 @@ class ConsultarCopiaObraSituacaoUseCase(IConsultarCopiaObraSituacaoUseCase):
             elif (obras.get_state() == 'Reservado'):
                     situacao.append(4)      
         return situacao
-                
-            
+                        
 class CadastrarObraUseCase(ICadastrarObraUseCase):
     def cadastrarObra(obraNova,ListaDeObras,isbn):
         obraNova.isbn = isbn
@@ -101,16 +92,14 @@ class CadastrarObraUseCase(ICadastrarObraUseCase):
         return ListaDeObras
 
 class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
-    def cadastrarCopiaObra(obra,novaCopia,id):
+    def cadastrarCopiaObra(obra,novaCopia,id) -> Obra:
         novaCopia.id = id
         obra.copias_obra.append(novaCopia)
         print("operação bem sucedida")
         return obra        
 
-        
-
 class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
-    def listarCopiaObraSituacao(obra,listaDeObras):
+    def listarCopiaObraSituacao(obra,listaDeObras) -> None:
         indiceBusca = 0
         for indice,obras in enumerate(listaDeObras):
             if(int(obra.isbn) == int(obras.isbn)):
@@ -127,10 +116,8 @@ class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
             elif(estado == 4):
                     print("Copia " + str(listaDeObras[indiceBusca].copias_obra[indice].id) + " está reservada") 
         
-
-
 class ReservarObraUseCase(IReservarObraUseCase):   
-    def reservarObra(obra,listaDeObras,locatario,funcionario) -> int:
+    def reservarObra(obra,listaDeObras,locatario,funcionario) -> list:
         numeroObra = 0
         situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao): 
@@ -149,7 +136,7 @@ class ReservarObraUseCase(IReservarObraUseCase):
         return listaDeObras        
 
 class EmprestarObraUseCase(IEmprestarObraUseCase):
-    def emprestarObra(obra,listaDeObras,locatario,funcionario) -> int:
+    def emprestarObra(obra,listaDeObras,locatario,funcionario) -> list:
         numeroObra = 0
         situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao): 
@@ -166,11 +153,9 @@ class EmprestarObraUseCase(IEmprestarObraUseCase):
                         return listaDeObras
         print("Não existem obras desse título disponíveis")        
         return listaDeObras              
-        ...
-
 
 class DevolverObraUseCase(IDevolverObraUseCase):
-    def devolverObra(obra,listaDeObras,idCopia) -> int:
+    def devolverObra(obra,listaDeObras,idCopia) -> list:
             numeroObra = 0
             for indice2, conteudo in enumerate(listaDeObras):
                 if(int(conteudo.isbn) == int(obra.isbn)):
