@@ -1,4 +1,6 @@
+from ast import Return
 import os
+from pickle import TRUE
 from pooa.app.pessoas.use_cases_interfaces import (
     IAdicionarUsuarioUseCase,
     IAlterarDadosUsuarioUseCase,
@@ -29,7 +31,11 @@ class AdicionarUsuarioUseCase(IAdicionarUsuarioUseCase):
 
 class ConsultarDisciplinasUseCase(IConsultarDisciplinasUseCase):
     def consultarDisciplina(usuario):
-        print("o usuario "+str(usuario.identificador)+" está inscrito em "+str(usuario.materias)+" materias")
+        if(int(usuario.materias)>0):
+            print("o usuario "+str(usuario.identificador)+" está inscrito em "+str(usuario.materias)+" materias")
+            return True
+        else:
+            return False
 
 class ConsultarLeitoresComPendenciasUseCase(IConsultarLeitoresComPendenciasUseCase):    
     def consultarLeitoresComPendencias(listadeobras,listadepessoas):
@@ -47,8 +53,10 @@ class ConsultarGruposAcademicosUseCase(IConsultarGruposAcademicosUseCase):
     def consultarGruposAcademicos(usuario):
         if(usuario.grupoAcademico == True):
             print("o usuario "+str(usuario.identificador)+" está inscrito no grupo academico "+str(usuario.idGrupoAcademico)+" materias")
+            return True
         else:
             print("o usuario não está inscrito em um grupo academico")
+            return False
 
 class ConsultarPendenciasUseCase(IConsultarPendenciasUseCase):
     def consultarPendencias(usuario,listadeobras):

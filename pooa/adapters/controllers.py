@@ -54,7 +54,7 @@ class ControllerObra:
         self._alterar_dados_obra_use_case = alterar_dados_obra_use_case
         self._listar_situacao_copia_obra_use_case = listar_situacao_copia_obra_use_case
     
-    def consultarObrasAtrasadas(self,listadeobras,listadepessoas) -> None:
+    def consultarObrasAtrasadas(self,listadeobras,listadepessoas) -> list:
         return self._consultar_obras_atrasadas_use_case.consultarObrasAtrasadas(listadeobras,listadepessoas)
 
     def consultarCopiaObra(self,obra,id) -> CopiaObra:
@@ -75,7 +75,7 @@ class ControllerObra:
     def alterarDadosObra(self,obra,ListaDeObras) -> bool:
         return self._alterar_dados_obra_use_case.alterarDadosObra(obra,ListaDeObras)
 
-    def listarCopiaObraSituacao(self,obra,listaDeObras) -> None:
+    def listarCopiaObraSituacao(self,obra,listaDeObras) -> list:
         return self._listar_situacao_copia_obra_use_case.listarCopiaObraSituacao(obra,listaDeObras)
 
 
@@ -119,10 +119,10 @@ class ControllerUser:
         self._remover_usuario_use_case = remover_usuario_use_case
         self._adicionar_usuario_use_case = adicionar_usuario_use_case
 
-    def consultarDisciplina(self,usuario) -> None:
+    def consultarDisciplina(self,usuario) -> Boolean:
         return self._consultar_disciplinas_use_case.consultarDisciplina(usuario)  # Integração com o grupo 5
 
-    def consultarGruposAcademicos(self,usuario) -> None:
+    def consultarGruposAcademicos(self,usuario) -> Boolean:
         return self._consultar_grupos_academicos_use_case.consultarGruposAcademicos(usuario)#Integração com o grupo 7
 
     def alterarDadosUsuario(self,usuario,listaDeUsuarios) -> list:

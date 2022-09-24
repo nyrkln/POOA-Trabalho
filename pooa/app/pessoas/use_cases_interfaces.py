@@ -1,10 +1,11 @@
 
 from abc import ABC, abstractmethod, ABCMeta, abstractstaticmethod
+from ctypes.wintypes import BOOL
 from xmlrpc.client import Boolean
 
 class IConsultarDisciplinasUseCase(ABC):
     @abstractmethod
-    def consultarDisciplina(usuario) -> None:
+    def consultarDisciplina(usuario) -> Boolean:
         pass
 
 class IConsultarPendenciasUseCase(ABC):
@@ -19,7 +20,7 @@ class IConsultarLeitoresComPendenciasUseCase(ABC):
 
 class IConsultarGruposAcademicosUseCase(ABC):
     @abstractmethod
-    def consultarGruposAcademicos(usuario) -> None:
+    def consultarGruposAcademicos(usuario) -> bool:
         pass
 
 class IRemoverUsuarioUseCase(ABC):

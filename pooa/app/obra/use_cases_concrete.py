@@ -27,10 +27,11 @@ class ConsultarCopiaObraUseCase(IConsultarCopiaObraUseCase):
         return -1 
 
 class ConsultarObrasAtrasadasUseCase(IConsultarObrasAtrasadasUseCase): 
-    def consultarObrasAtrasadas(listadeobras,listadepessoas) -> None:
+    def consultarObrasAtrasadas(listadeobras,listadepessoas) -> list:
         listadedevedores = []
         listadeobrasatrasadas = []
         listadeidentificadores = []
+        retorno = []
         for obras in listadeobras:
             for copias in obras.copias_obra:
                 if copias.get_state() == 'Atrasado':
@@ -41,6 +42,8 @@ class ConsultarObrasAtrasadasUseCase(IConsultarObrasAtrasadasUseCase):
             for pessoas in listadepessoas[1]:
                 if str(devedores).strip() == str(pessoas.identificador).strip():
                     print("a copia " + str(listadeidentificadores[indice]).strip()+" da obra: " + str(listadeobrasatrasadas[indice]).strip()+ " está atrasada, seu locatario é " + str(pessoas.nome).strip() + " seu telefone é " + str(pessoas.telefone).strip() + " e seu email é " + str(pessoas.email).strip())
+        retorno.append(listadedevedores,listadeobrasatrasadas,listadeidentificadores)
+        return retorno
 
 class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):
     def alterarDadosObra(obra,ListaDeObras) -> bool:
@@ -99,7 +102,7 @@ class CadastrarCopiaObraUseCase(ICadastrarCopiaObraUseCase):
         return obra        
 
 class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
-    def listarCopiaObraSituacao(obra,listaDeObras) -> None:
+    def listarCopiaObraSituacao(obra,listaDeObras) -> List:
         indiceBusca = 0
         for indice,obras in enumerate(listaDeObras):
             if(int(obra.isbn) == int(obras.isbn)):
@@ -115,7 +118,8 @@ class ListarSituacaoCopiaObraUseCase(IListarSituacaoCopiaObraUseCase):
                     print("Copia " + str(listaDeObras[indiceBusca].copias_obra[indice].id) + " está atrasada") 
             elif(estado == 4):
                     print("Copia " + str(listaDeObras[indiceBusca].copias_obra[indice].id) + " está reservada") 
-        
+        return situacao
+
 class ReservarObraUseCase(IReservarObraUseCase):   
     def reservarObra(obra,listaDeObras,locatario,funcionario) -> list:
         numeroObra = 0

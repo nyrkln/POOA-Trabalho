@@ -16,7 +16,7 @@ class IAlterarDadosObraUseCase(ABC):
 
 class IConsultarObrasAtrasadasUseCase(ABC): 
     @abstractmethod
-    def consultarObrasAtrasadas(listadeobras,listadepessoas) -> None:
+    def consultarObrasAtrasadas(listadeobras,listadepessoas) -> list:
         pass    
 
 class IConsultarCopiaObraSituacaoUseCase(ABC): 
@@ -41,7 +41,7 @@ class ICadastrarCopiaObraUseCase(ABC):
 
 class IListarSituacaoCopiaObraUseCase(ABC):
     @abstractmethod
-    def listarCopiaObraSituacao(obra,listaDeObras) -> None:
+    def listarCopiaObraSituacao(obra,listaDeObras) -> list:
         pass
 
 class IReservarObraUseCase(ABC):

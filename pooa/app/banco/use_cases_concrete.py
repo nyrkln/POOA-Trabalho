@@ -125,7 +125,7 @@ class ReescreveBancoObrassUseCase(IReescreveBanco):
             af.write('-5')
 
 class LeitorBancoPessoaUseCase(ILeitorBanco):
-    def leitorBanco(listaDeObjetos: List):
+    def leitorBanco(listaDeObjetos: List) -> None:
         rf = open(os.path.join("BD","BancoPessoa.txt"),"r")
         proximo = str(rf.readline())
         while(proximo != '-5'):
@@ -187,7 +187,7 @@ class LeitorBancoObraUseCase(ILeitorBanco):
         return listaDeObjetos   
 
 class RequisicaoIdPessoaUseCase(IRequisicaoId):
-    def requisicaoId():
+    def requisicaoId() -> int:
         with open(os.path.join("BD","idPessoa.txt"), "r+") as f:    
             Id = int(f.readline())
             f.seek(0)
