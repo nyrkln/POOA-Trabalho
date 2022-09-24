@@ -9,7 +9,22 @@ from pooa.app.pessoas.use_cases_interfaces import (
     IConsultarPendenciasUseCase,
     IRemoverUsuarioUseCase,
     IConsultarLeitoresComPendenciasUseCase,
+    IValidarUsuarioUseCase
 )
+class ValidarUsuarioUseCase(IValidarUsuarioUseCase):
+    def validarUsuario(login,senha,listadepessoas):
+        for pessoas in listadepessoas[0]:
+            if(pessoas.email.strip() == str(login).strip()):
+                if(pessoas.senha.strip() == str(senha).strip()):
+                    return True
+                return False    
+        for pessoas in listadepessoas[1]:  
+            if(pessoas.email.strip() == str(login).strip()):
+                if(pessoas.senha.strip() == str(senha).strip()):
+                    return True
+                return False   
+        return False         
+
 class AdicionarUsuarioUseCase(IAdicionarUsuarioUseCase):
     def adicionarUsuario(ListaDePessoas,pessoa,id):
         pessoa.identificador = id

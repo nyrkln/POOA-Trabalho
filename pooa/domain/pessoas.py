@@ -82,11 +82,6 @@ class Leitor(Usuario):
             self.materias = int(y.text)'''
             pass
 
-
-
-
-
-    
 class UsuarioFactory:
     def build_usuario(tipo_usuario,identificador,nome,cpf,cep,data_nasc,telefone,email,senha,parametro_dif):
         parametro = Usuario(identificador,nome,cpf,cep,data_nasc,telefone,email,tipo_usuario,senha)    

@@ -1,7 +1,12 @@
 
 from abc import ABC, abstractmethod, ABCMeta, abstractstaticmethod
 from ctypes.wintypes import BOOL
-from xmlrpc.client import Boolean
+from xmlrpc.client import Boolean, boolean
+
+class IValidarUsuarioUseCase(ABC):
+    @abstractmethod
+    def validarUsuario(login,senha,listadepessoas) -> boolean:
+        pass
 
 class IConsultarDisciplinasUseCase(ABC):
     @abstractmethod
@@ -35,7 +40,7 @@ class IAlterarDadosUsuarioUseCase(ABC):
 
 class IAdicionarUsuarioUseCase(ABC):
     @abstractmethod
-    def AdicionarUsuario(ListaDePessoas,pessoa,id) -> list:
+    def adicionarUsuario(ListaDePessoas,pessoa,id) -> list:
         pass        
 
 class IUsuario(metaclass=ABCMeta):

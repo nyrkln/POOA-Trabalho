@@ -5,7 +5,6 @@ from typing import List
 import os
 from pooa.domain.pessoas import TipoUsuario
 from pooa.app.obra.use_cases_interfaces import (
-    IAlterarDadosCopiaObraUseCase,
     IAlterarDadosObraUseCase,
     ICadastrarCopiaObraUseCase,
     ICadastrarObraUseCase,

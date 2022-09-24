@@ -19,7 +19,8 @@ from pooa.app.pessoas.use_cases_concrete import (AlterarDadosUsuarioUseCase,
     ConsultarPendenciasUseCase,
     ConsultarLeitoresComPendenciasUseCase,
     RemoverUsuarioUseCase,
-    AdicionarUsuarioUseCase)
+    AdicionarUsuarioUseCase,
+    ValidarUsuarioUseCase)
 
 from pooa.app.banco.use_cases_concrete import (
     ReescreveBancoPessoasUseCase,
@@ -109,7 +110,8 @@ class ControllerUser:
         consultar_pendencias_use_case: ConsultarPendenciasUseCase,
         consultar_leitores_com_pendencias_use_case: ConsultarLeitoresComPendenciasUseCase,
         remover_usuario_use_case: RemoverUsuarioUseCase,
-        adicionar_usuario_use_case: AdicionarUsuarioUseCase
+        adicionar_usuario_use_case: AdicionarUsuarioUseCase,
+        validar_usuario_use_case : ValidarUsuarioUseCase
     ):
         self._consultar_disciplinas_use_case = consultar_disciplinas_use_case
         self._consultar_grupos_academicos_use_case = consultar_grupos_academicos_use_case
@@ -118,6 +120,7 @@ class ControllerUser:
         self._consultar_leitores_com_pendencias_use_case = consultar_leitores_com_pendencias_use_case
         self._remover_usuario_use_case = remover_usuario_use_case
         self._adicionar_usuario_use_case = adicionar_usuario_use_case
+        self._validar_usuario_use_case = validar_usuario_use_case
 
     def consultarDisciplina(self,usuario) -> Boolean:
         return self._consultar_disciplinas_use_case.consultarDisciplina(usuario)  # Integração com o grupo 5
@@ -137,8 +140,11 @@ class ControllerUser:
     def removerUsuario(self,usuario,ListaDeUsuarios) -> list:
         return self._remover_usuario_use_case.removerUsuario(ListaDeUsuarios)   
 
-    def AdicionarUsuario(self,ListaDePessoas,pessoa,id) -> list:
+    def adicionarUsuario(self,ListaDePessoas,pessoa,id) -> list:
         return self._adicionar_usuario_use_case.AdicionarUsuario(ListaDePessoas,pessoa,id) 
+
+    def validarUsuario(self,login,senha,listadepessoas) -> list:
+        return self._validar_usuario_use_case.validarUsuario(login,senha,listadepessoas)    
 
 class ControllerBanco:
         def __init__(

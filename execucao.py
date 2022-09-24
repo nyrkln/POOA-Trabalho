@@ -1,27 +1,29 @@
 import datetime
 from pickle import APPEND
 from pooa.app.obra.use_cases_concrete import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, DevolverObraUseCase, EmprestarObraUseCase, ListarSituacaoCopiaObraUseCase, ReservarObraUseCase,RemoverObraUseCase,ConsultarObrasAtrasadasUseCase,ConsultarCopiaObraSituacaoUseCase
-from pooa.app.obra.use_cases_interfaces import ICopiaObra, ICadastrarObraUseCase
-from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, ConsultarPendenciasUseCase,RemoverUsuarioUseCase,AlterarDadosUsuarioUseCase,ConsultarLeitoresComPendenciasUseCase,ConsultarDisciplinasUseCase,ConsultarGruposAcademicosUseCase
+from pooa.app.obra.use_cases_interfaces import ICadastrarObraUseCase
+from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, ConsultarPendenciasUseCase,RemoverUsuarioUseCase,AlterarDadosUsuarioUseCase,ConsultarLeitoresComPendenciasUseCase,ConsultarDisciplinasUseCase,ConsultarGruposAcademicosUseCase, ValidarUsuarioUseCase
 from pooa.domain.obra import CopiaObra, Obra
 from pooa.domain.pessoas import Usuario,UsuarioFactory,Funcionario,Administrador,Leitor,TipoUsuario,TipoLeitor
 from pooa.app.banco.use_cases_concrete import LeitorBancoObraUseCase,LeitorBancoPessoaUseCase,ReescreveBancoObrassUseCase,ReescreveBancoPessoasUseCase,RequisicaoIdCopiaObraUseCase,RequisicaoIdObraUseCase,RequisicaoIdPessoaUseCase
-from pooa.adapters.controllers import ControllerCadastrarObra
+from pooa.adapters.controllers import ControllerBanco,ControllerObra,ControllerMovimentacao,ControllerUser
 
 ListaDeObras = [] 
 ListaDePessoas = [[],[]]
 
+controllerBanco = ControllerBanco(ReescreveBancoPessoasUseCase,ReescreveBancoObrassUseCase,LeitorBancoPessoaUseCase,LeitorBancoObraUseCase,RequisicaoIdPessoaUseCase,RequisicaoIdObraUseCase,RequisicaoIdCopiaObraUseCase)
+controllerPessoa = ControllerUser(ConsultarDisciplinasUseCase,ConsultarGruposAcademicosUseCase,AlterarDadosUsuarioUseCase,ConsultarPendenciasUseCase,ConsultarLeitoresComPendenciasUseCase,RemoverUsuarioUseCase,AdicionarUsuarioUseCase,ValidarUsuarioUseCase)
 
-ListaDeObras = LeitorBancoObraUseCase.leitorBanco(ListaDeObras)
-ListaDePessoas = LeitorBancoPessoaUseCase.leitorBanco(ListaDePessoas)
 
+ListaDeObras =  controllerBanco.leitorBancoObras(ListaDeObras)
+ListaDePessoas = controllerBanco.leitorBancoPessoas(ListaDePessoas)
+
+print(controllerPessoa.validarUsuario('othepaladini@gmail.com','teste',ListaDePessoas))
 
 livro = Obra('Sapiens','abril',None, 'Yuval Harari', ['Historia', 'cientifico'], datetime.date(2011, 1, 1), 459, 5, None)
 leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11950,'joao',41905743896,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',[769111,TipoLeitor.ALUNO_GRADUACAO])
 funcionario1 = UsuarioFactory.build_usuario(TipoUsuario.FUNCIONARIO,12450,'balconista',41905743877,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',12450)
 
-
-ListaDeObras = ControllerCadastrarObra(CadastrarObraUseCase).cadastrar_obra(livro,ListaDeObras,RequisicaoIdCopiaObraUseCase.requisicaoId())
 
 copia1 = CopiaObra(1,1,-1,[1,datetime.date(2013, 1, 1),datetime.date(2013, 1, 1)])
 copia2 = CopiaObra(1,2,ListaDePessoas[1][0].identificador,[funcionario1.identificador,datetime.date(2013, 1, 1),datetime.date(2013, 1, 1)])
@@ -64,8 +66,8 @@ leitor2 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,None,'Valter',41905743
 leitor3 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11750,'jonas',41905743832,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',[-1,TipoLeitor.ALUNO_GRADUACAO])
 #ConsultarGruposAcademicosUseCase.consultarGruposAcademicos(leitor3)
 #print(ListaDePessoas)
-ReescreveBancoPessoasUseCase.reescreveBanco(ListaDePessoas)
-ReescreveBancoObrassUseCase.reescreveBanco(ListaDeObras)
+controllerBanco.reescreveBancoPessoas(ListaDePessoas)
+controllerBanco.reescreveBancoObras(ListaDeObras)
 
 
 
