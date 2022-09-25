@@ -35,5 +35,7 @@ Para verificar a participação de certo aluno em um Grupo Acadêmico, basta ace
 - **Disciplinas**
 Para verificar se o servidor está funcionando, primeiro acesse **https://inscricaodisciplinas.herokuapp.com/**. Para verificar a quantidade de disciplinas de determinado aluno, vá em **https://inscricaodisciplinas.herokuapp.com/aluno/[ID]/disciplinas** substituindo ID por **3fa85f64-5717-4562-b3fc-2c963f66afa6** ou **03dec7a5-9b4e-4d73-a87f-c00ff03d71b7**.
 
+Também é possível ver as integrações, no execução.py, na parte devidamente descriminada como o retorno de informações obtidas via API
+
 #### Com o nosso projeto
 É possível **retornar todas as obras em nosso banco**, **https://rest-api-projeto-pooa-grupo1.herokuapp.com/obras**, e **também checar um CPF por pendências**, **https://rest-api-projeto-pooa-grupo1.herokuapp.com/situacao?cpf=[CPF]**, substituindo [CPF] por 41905743840, 41905743842 (sem pendências) ou 41905743844 e 41905743846 (com pendências).
