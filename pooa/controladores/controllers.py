@@ -92,13 +92,13 @@ class ControllerMovimentacao:
         self._devolver_obra_use_case = devolver_obra_use_case
 
     def reservarObra(self,obra,listaDeObras,locatario,funcionario) -> list:
-        self._reservar_obra_use_case.reservarObra(obra,listaDeObras,locatario,funcionario)
+        return self._reservar_obra_use_case.reservarObra(obra,listaDeObras,locatario,funcionario)
 
     def emprestarObra(self,obra,listaDeObras,locatario,funcionario) -> list:
-        self._emprestar_obra_use_case.emprestarObra(obra,listaDeObras,locatario,funcionario)
+        return self._emprestar_obra_use_case.emprestarObra(obra,listaDeObras,locatario,funcionario)
 
     def devolverObra(self,obra,listaDeObras,idCopia) -> list:
-        self._devolver_obra_use_case.devolverObra(obra,listaDeObras,idCopia)
+        return self._devolver_obra_use_case.devolverObra(obra,listaDeObras,idCopia)
 
 
 class ControllerUser:
@@ -138,10 +138,10 @@ class ControllerUser:
         return self._consultar_leitores_com_pendencias_use_case.consultarLeitoresComPendencias(listadeobras,listadepessoas)
 
     def removerUsuario(self,usuario,ListaDeUsuarios) -> list:
-        return self._remover_usuario_use_case.removerUsuario(ListaDeUsuarios)   
+        return self._remover_usuario_use_case.removerUsuario(usuario,ListaDeUsuarios)   
 
     def adicionarUsuario(self,ListaDePessoas,pessoa,id) -> list:
-        return self._adicionar_usuario_use_case.AdicionarUsuario(ListaDePessoas,pessoa,id) 
+        return self._adicionar_usuario_use_case.adicionarUsuario(ListaDePessoas,pessoa,id) 
 
     def validarUsuario(self,login,senha,listadepessoas) -> list:
         return self._validar_usuario_use_case.validarUsuario(login,senha,listadepessoas)    

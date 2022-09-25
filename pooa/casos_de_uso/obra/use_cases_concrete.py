@@ -1,5 +1,6 @@
 import datetime
 from pooa.entidades.obra import Obra, CopiaObra, TipoObra
+from pooa.entidades.pessoas import TipoLeitor
 from pickle import TRUE
 from typing import List
 import os
@@ -41,7 +42,7 @@ class ConsultarObrasAtrasadasUseCase(IConsultarObrasAtrasadasUseCase):
             for pessoas in listadepessoas[1]:
                 if str(devedores).strip() == str(pessoas.identificador).strip():
                     print("a copia " + str(listadeidentificadores[indice]).strip()+" da obra: " + str(listadeobrasatrasadas[indice]).strip()+ " está atrasada, seu locatario é " + str(pessoas.nome).strip() + " seu telefone é " + str(pessoas.telefone).strip() + " e seu email é " + str(pessoas.email).strip())
-        retorno.append(listadedevedores,listadeobrasatrasadas,listadeidentificadores)
+        retorno.append([listadedevedores,listadeobrasatrasadas,listadeidentificadores])
         return retorno
 
 class AlterarDadosObraUseCase(IAlterarDadosObraUseCase):
@@ -143,12 +144,12 @@ class EmprestarObraUseCase(IEmprestarObraUseCase):
         numeroObra = 0
         data_devolucao_usuario = 0
         data_devolucao_obra = 0
-        if(locatario.tipoLeitor == locatario.ALUNO_GRADUACAO or locatario.tipoLeitor == locatario.ALUNO_POST or locatario.tipoLeitor == locatario.PROFESSOR):
+        if(locatario.tipoLeitor == TipoLeitor.ALUNO_GRADUACAO or locatario.tipoLeitor == TipoLeitor.ALUNO_POST or locatario.tipoLeitor == TipoLeitor.PROFESSOR):
             data_devolucao_usuario = 5
         else:
             data_devolucao_usuario = 3
 
-        if(obra.CategoriaObra == obra.DISSERT_MESTRADO or obra.CategoriaObra == obra.TESE_DOUTORADO or obra.CategoriaObra == obra.RELATORIO_TECNICO or obra.CategoriaObra == obra.PERIODICO):
+        if(obra.categoria_obra == TipoObra.DISSERT_MESTRADO or obra.categoria_obra == TipoObra.TESE_DOUTORADO or obra.categoria_obra == TipoObra.RELATORIO_TECNICO or obra.categoria_obra == TipoObra.PERIODICO):
             data_devolucao_obra = 5
         else:
             data_devolucao_obra = 3    
@@ -178,8 +179,8 @@ class DevolverObraUseCase(IDevolverObraUseCase):
             situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
             for indice,estado in enumerate(situacao):
                 if((listaDeObras[numeroObra].copias_obra[indice].id == idCopia) and (estado == 2 or estado == 3 or estado == 4)):
-                    if((datetime.date.today() - listaDeObras[numeroObra].copias_obra[indice].data_devolucao).days>0):
-                        print("o usuario deve "+str(int((datetime.date.today() - listaDeObras[numeroObra].copias_obra[indice].data_devolucao).days)*3)+" reais a biblioteca")
+                    if((datetime.datetime.now() - listaDeObras[numeroObra].copias_obra[indice].data_devolucao).days>0):
+                        print("o usuario deve "+str(int((datetime.datetime.now() - listaDeObras[numeroObra].copias_obra[indice].data_devolucao).days)*3)+" reais a biblioteca")
                     listaDeObras[numeroObra].copias_obra[indice].state = 'Disponivel'
                     listaDeObras[numeroObra].copias_obra[indice].locatario = '-1'
                     listaDeObras[numeroObra].copias_obra[indice].data_locacao = None

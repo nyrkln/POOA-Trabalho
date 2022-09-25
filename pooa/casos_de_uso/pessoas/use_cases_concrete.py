@@ -29,11 +29,11 @@ class AdicionarUsuarioUseCase(IAdicionarUsuarioUseCase):
     def adicionarUsuario(ListaDePessoas,pessoa,id):
         pessoa.identificador = id
         for pessoas in ListaDePessoas[0]:
-            if (int(pessoas.cpf) == int(pessoa.cpf)):
+            if (int(pessoas.cpf) == int(pessoa.cpf) or str(pessoas.email).strip() == str(pessoa.email).strip()):
                 print("Usuario já cadastrado")
                 return ListaDePessoas
         for pessoas in ListaDePessoas[1]:
-            if (int(pessoas.cpf) == int(pessoa.cpf)):
+            if (int(pessoas.cpf) == int(pessoa.cpf) or str(pessoas.email).strip() == str(pessoa.email).strip()):
                 print("Usuario já cadastrado")
                 return ListaDePessoas       
         if pessoa.usuario.value == 2:
@@ -47,7 +47,7 @@ class AdicionarUsuarioUseCase(IAdicionarUsuarioUseCase):
 class ConsultarDisciplinasUseCase(IConsultarDisciplinasUseCase):
     def consultarDisciplina(usuario):
         if(int(usuario.materias)>0):
-            print("o usuario "+str(usuario.identificador)+" está inscrito em "+str(usuario.materias)+" materias")
+            print("o usuario "+str(usuario.identificador).strip()+" está inscrito em "+str(usuario.materias)+" materias")
             return True
         else:
             return False
@@ -68,7 +68,7 @@ class ConsultarLeitoresComPendenciasUseCase(IConsultarLeitoresComPendenciasUseCa
 class ConsultarGruposAcademicosUseCase(IConsultarGruposAcademicosUseCase):
     def consultarGruposAcademicos(usuario):
         if(usuario.grupoAcademico == True):
-            print("o usuario "+str(usuario.identificador)+" está inscrito no grupo academico "+str(usuario.idGrupoAcademico)+" materias")
+            print("o usuario "+str(usuario.identificador).strip()+" está inscrito no grupo academico "+str(usuario.idGrupoAcademico))
             return True
         else:
             print("o usuario não está inscrito em um grupo academico")
