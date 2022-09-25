@@ -74,13 +74,22 @@ class ConsultarGruposAcademicosUseCase(IConsultarGruposAcademicosUseCase):
             return False
 
 class ConsultarPendenciasUseCase(IConsultarPendenciasUseCase):
-    def consultarPendencias(usuario,listadeobras):
-        for obras in listadeobras:
+    def consultarPendencias(cpf,ListaDeObras,ListaDePessoas):
+        identificador = '-1'
+        for pessoas in ListaDePessoas[0]:
+            if(str(cpf).strip() == str(pessoas.cpf).strip()):
+                identificador = str(pessoas.identificador).strip()
+        for pessoas in ListaDePessoas[1]:
+            if(str(cpf).strip() == str(pessoas.cpf).strip()):
+                identificador = str(pessoas.identificador).strip()
+        if(identificador == '-1'):
+            return False
+        for obras in ListaDeObras:
             for copias in obras.copias_obra:
-                if (str(copias.locatario).strip() == str(usuario.identificador).strip()) and (copias.get_state() == 'Atrasado'):
+                if (str(copias.locatario).strip() == str(identificador).strip()) and (copias.get_state() == 'Atrasado'):
                     return True
-        return False               
-
+        return False
+        
 class AlterarDadosUsuarioUseCase(IAlterarDadosUsuarioUseCase):
     def alterarDadosUsuario(usuario,listaDeUsuarios):
         for indice,usuarios in enumerate(listaDeUsuarios[0]):

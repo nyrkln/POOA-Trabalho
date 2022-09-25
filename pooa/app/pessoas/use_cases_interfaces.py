@@ -15,7 +15,7 @@ class IConsultarDisciplinasUseCase(ABC):
 
 class IConsultarPendenciasUseCase(ABC):
     @abstractmethod
-    def consultarPendencias(usuario,listadeobras) -> Boolean:
+    def consultarPendencias(cpf,ListaDeObras,ListaDePessoas) -> Boolean:
         pass
 
 class IConsultarLeitoresComPendenciasUseCase(ABC):

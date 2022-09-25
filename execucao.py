@@ -20,6 +20,8 @@ ListaDePessoas = controllerBanco.leitorBancoPessoas(ListaDePessoas)
 
 print(controllerPessoa.validarUsuario('othepaladini@gmail.com','teste',ListaDePessoas))
 
+controllerPessoa.consultarPendencias("4905743840",ListaDeObras,ListaDePessoas)
+
 livro = Obra('Sapiens','abril',None, 'Yuval Harari', ['Historia', 'cientifico'], datetime.date(2011, 1, 1), 459, 5, None)
 leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11950,'joao',41905743896,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',[769111,TipoLeitor.ALUNO_GRADUACAO])
 funcionario1 = UsuarioFactory.build_usuario(TipoUsuario.FUNCIONARIO,12450,'balconista',41905743877,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',12450)

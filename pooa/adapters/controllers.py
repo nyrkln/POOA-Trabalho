@@ -131,8 +131,8 @@ class ControllerUser:
     def alterarDadosUsuario(self,usuario,listaDeUsuarios) -> list:
         return self._alterar_dados_usuarios_use_case.alterarDadosUsuario(usuario,listaDeUsuarios)
 
-    def consultarPendencias(self,usuario,listadeobras) -> Boolean:
-        return self._consultar_pendencias_use_case.consultarPendencias(usuario,listadeobras)    
+    def consultarPendencias(self,cpf,ListaDeObras,ListaDePessoas) -> Boolean:
+        return self._consultar_pendencias_use_case.consultarPendencias(cpf,ListaDeObras,ListaDePessoas)    
 
     def consultarLeitoresComPendencias(self,listadeobras,listadepessoas) -> Boolean:
         return self._consultar_leitores_com_pendencias_use_case.consultarLeitoresComPendencias(listadeobras,listadepessoas)
