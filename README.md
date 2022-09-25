@@ -9,7 +9,7 @@ Pedro Freire Baleeiro 790984
 
 Linguagem: Python
 
-Integração entre os grupos 1, 5 e 7 utilizando Flask, Heroku, gunicorn, werkzeug e Swagger para a documentação.
+Integração entre os grupos 1, 5 e 7 utilizando Flask, Heroku, gunicorn e werkzeug.
 
 O sistema busca simular o funcionamento de uma biblioteca que pode ser visto no diagrama a seguir [Biblioteca_4_G1_Final (2).pdf](https://github.com/nyrkln/POOA-Trabalho/files/9641758/Biblioteca_4_G1_Final.2.pdf) e também por meio da execução do código no arquivo execucao.py.
 
