@@ -19,7 +19,11 @@ As especificações que levaram até a nossa implementação podem ser encontrad
 
 Para rodar o código siga os passos a seguir:
 
-1 - Clone o repositório na sua máquina por meio do terminal dando "git clone https://github.com/nyrkln/POOA-Trabalho.git" ou por meio de outro aplicativo como Github Desktop. Após isso abra o projeto na sua máquina com o python3 instalado.
+1 - Clone o repositório na sua máquina por meio do terminal dando ou por meio de outro aplicativo como Github Desktop
+```
+git clone https://github.com/nyrkln/POOA-Trabalho.git
+```
+Após isso abra o projeto na sua máquina com o python3 instalado.
 
-2 - A partir disso vá no arquivo execucao.py, descomente os trechos de código comentados que tem interesse de rodar, salve e digite "python3 execucao.py" no terminal para rodar. Siga as instruções comentadas no código
+2 - Vá no arquivo execucao.py, descomente os trechos de código comentados que tem interesse de rodar, salve e digite "python3 execucao.py" no terminal para rodar. Siga as instruções comentadas no código
 
