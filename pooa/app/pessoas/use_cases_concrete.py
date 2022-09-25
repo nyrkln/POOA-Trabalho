@@ -63,6 +63,7 @@ class ConsultarLeitoresComPendenciasUseCase(IConsultarLeitoresComPendenciasUseCa
             for pessoas in listadepessoas[1]:
                 if str(devedores).strip() == str(pessoas.identificador).strip():
                     print("o usuario "+pessoas.nome.strip()+" de cpf: " + str(pessoas.cpf).strip()+ " está em débito com a biblioteca")
+        return listadedevedores            
 
 class ConsultarGruposAcademicosUseCase(IConsultarGruposAcademicosUseCase):
     def consultarGruposAcademicos(usuario):

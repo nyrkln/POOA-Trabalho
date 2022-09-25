@@ -10,21 +10,6 @@ from pooa.domain.pessoas import Usuario
 from pooa.shared.singleton import SingletonMeta
 
 
-@dataclass
-class Autor:
-    """Autor entity"""
-    primeiro_nome: str
-    nacionalidade: str
-    segundo_nome: str
-
-
-@dataclass
-class Editora:
-    """Editora entity"""
-    nome: str
-    cnpj: str
-
-
 class TipoObra(Enum):
     """Tipo obra enum"""
     DISSERT_MESTRADO = 1
@@ -36,12 +21,6 @@ class TipoObra(Enum):
     NOTA_DIDATICA = 7
     REVISTA = 8
 
-
-@dataclass
-class CategoriaObra:
-    """Categoria da Obra"""
-    taxa: float
-    obra: TipoObra
 
 #@dataclass
 class CopiaObra:
@@ -98,12 +77,12 @@ class CopiaObra:
 class Obra:
     """Obra concreta"""
     titulo: str
-    editora: Editora
+    editora: str
     isbn: int
-    autor: Autor
+    autor: str
     palavras_chave: List[str]
     data_publi: date
     nro_paginas: int
-    categoria_obra: CategoriaObra
+    categoria_obra: TipoObra
     copias_obra: List[CopiaObra]
 

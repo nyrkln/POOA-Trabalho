@@ -17,17 +17,6 @@ class TipoLeitor(Enum):
     USUARIO_EXTERNO = 5
 
 
-@dataclass 
-class Categoria:
-    numero_dias: int
-    descricao: str
-
-
-@dataclass
-class CategoriaLeitor(Categoria):
-    tipo: TipoLeitor
-
-
 class TipoUsuario(Enum):
     ADMINISTRADOR = 1
     FUNCIONARIO = 2
@@ -65,7 +54,7 @@ class Leitor(Usuario):
     materias: int
     def __init__(self,usuario_parametro,parametro_dif):
         Usuario.__init__(self,usuario_parametro.identificador,usuario_parametro.nome,usuario_parametro.cpf,usuario_parametro.cep,usuario_parametro.data_nasc,usuario_parametro.telefone,usuario_parametro.email,usuario_parametro.usuario,usuario_parametro.senha)
-        if parametro_dif[0] == -1:
+        if (requests.get("https://api-grupo7.herokuapp.com/api/v1/grupoAcademico/buscarRA/791085").text == '[]'):
             self.grupoAcademico = False
             self.idGrupoAcademico = -1
         else:
@@ -73,14 +62,13 @@ class Leitor(Usuario):
             self.idGrupoAcademico = parametro_dif[0]
         self.tipoLeitor = parametro_dif[1]
         if (self.tipoLeitor == TipoLeitor.ALUNO_GRADUACAO or self.tipoLeitor == TipoLeitor.ALUNO_POST):
-            '''x = random.randint(1,3)
+            x = random.randint(1,3)
             if(x==1):    
                 url = 'https://inscricaodisciplinas.herokuapp.com/aluno/03dec7a5-9b4e-4d73-a87f-c00ff03d71b7/disciplinas'
             else:
                 url = 'https://inscricaodisciplinas.herokuapp.com/aluno/3fa85f64-5717-4562-b3fc-2c963f66afa6/disciplinas'
             y = requests.get(url)
-            self.materias = int(y.text)'''
-            pass
+            self.materias = int(y.text)
 
 class UsuarioFactory:
     def build_usuario(tipo_usuario,identificador,nome,cpf,cep,data_nasc,telefone,email,senha,parametro_dif):
@@ -88,9 +76,7 @@ class UsuarioFactory:
         if tipo_usuario == TipoUsuario.FUNCIONARIO:
             return Funcionario(parametro,parametro_dif)
         if tipo_usuario == TipoUsuario.LEITOR:
-            return Leitor(parametro,parametro_dif)
-        #if tipo_usuario == TipoUsuario.ADMINISTRADOR:
-        #    return Administrador(parametro)    
+            return Leitor(parametro,parametro_dif)    
         print("Tipo Inválido")
         return -1
 

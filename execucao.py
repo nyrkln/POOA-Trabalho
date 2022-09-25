@@ -1,5 +1,6 @@
 import datetime
 from pickle import APPEND
+import requests
 from pooa.app.obra.use_cases_concrete import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, DevolverObraUseCase, EmprestarObraUseCase, ListarSituacaoCopiaObraUseCase, ReservarObraUseCase,RemoverObraUseCase,ConsultarObrasAtrasadasUseCase,ConsultarCopiaObraSituacaoUseCase
 from pooa.app.obra.use_cases_interfaces import ICadastrarObraUseCase
 from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, ConsultarPendenciasUseCase,RemoverUsuarioUseCase,AlterarDadosUsuarioUseCase,ConsultarLeitoresComPendenciasUseCase,ConsultarDisciplinasUseCase,ConsultarGruposAcademicosUseCase, ValidarUsuarioUseCase
@@ -18,9 +19,9 @@ controllerPessoa = ControllerUser(ConsultarDisciplinasUseCase,ConsultarGruposAca
 ListaDeObras =  controllerBanco.leitorBancoObras(ListaDeObras)
 ListaDePessoas = controllerBanco.leitorBancoPessoas(ListaDePessoas)
 
-print(controllerPessoa.validarUsuario('othepaladini@gmail.com','teste',ListaDePessoas))
+#print(controllerPessoa.validarUsuario('othepaladini@gmail.com','teste',ListaDePessoas))
 
-controllerPessoa.consultarPendencias("4905743840",ListaDeObras,ListaDePessoas)
+#controllerPessoa.consultarPendencias("4905743840",ListaDeObras,ListaDePessoas)
 
 livro = Obra('Sapiens','abril',None, 'Yuval Harari', ['Historia', 'cientifico'], datetime.date(2011, 1, 1), 459, 5, None)
 leitor1 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11950,'joao',41905743896,15061730,datetime.date(2000, 9, 4),17991353055,'othepaladini@gmail.com','teste',[769111,TipoLeitor.ALUNO_GRADUACAO])
@@ -70,9 +71,4 @@ leitor3 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,11750,'jonas',41905743
 #print(ListaDePessoas)
 controllerBanco.reescreveBancoPessoas(ListaDePessoas)
 controllerBanco.reescreveBancoObras(ListaDeObras)
-
-
-
-
-
 

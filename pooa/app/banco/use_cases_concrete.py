@@ -175,6 +175,8 @@ class LeitorBancoObraUseCase(ILeitorBanco):
                 base = str(proximo).split(",")
                 data_emprestimo = datetime.datetime.strptime(base[4].strip('\n'),"%Y-%d-%m").date()
                 data_devolucao = datetime.datetime.strptime(base[5].strip('\n'),"%Y-%d-%m").date()
+                if (datetime.datetime.now().date() > data_devolucao):
+                    base[1] = '3'
                 copiaBase = CopiaObra(int(base[0]),int(base[1]),str(base[2].strip('\n')),[str(base[3].strip('\n')),data_emprestimo,data_devolucao])
                 copias.append(copiaBase)
                 proximo = rf.readline()

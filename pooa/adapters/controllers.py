@@ -134,7 +134,7 @@ class ControllerUser:
     def consultarPendencias(self,cpf,ListaDeObras,ListaDePessoas) -> Boolean:
         return self._consultar_pendencias_use_case.consultarPendencias(cpf,ListaDeObras,ListaDePessoas)    
 
-    def consultarLeitoresComPendencias(self,listadeobras,listadepessoas) -> Boolean:
+    def consultarLeitoresComPendencias(self,listadeobras,listadepessoas) -> list:
         return self._consultar_leitores_com_pendencias_use_case.consultarLeitoresComPendencias(listadeobras,listadepessoas)
 
     def removerUsuario(self,usuario,ListaDeUsuarios) -> list:
@@ -145,6 +145,7 @@ class ControllerUser:
 
     def validarUsuario(self,login,senha,listadepessoas) -> list:
         return self._validar_usuario_use_case.validarUsuario(login,senha,listadepessoas)    
+
 
 class ControllerBanco:
         def __init__(

@@ -1,5 +1,5 @@
 import datetime
-from pooa.domain.obra import Obra, CopiaObra
+from pooa.domain.obra import Obra, CopiaObra, TipoObra
 from pickle import TRUE
 from typing import List
 import os
@@ -141,6 +141,18 @@ class ReservarObraUseCase(IReservarObraUseCase):
 class EmprestarObraUseCase(IEmprestarObraUseCase):
     def emprestarObra(obra,listaDeObras,locatario,funcionario) -> list:
         numeroObra = 0
+        data_devolucao_usuario = 0
+        data_devolucao_obra = 0
+        if(locatario.tipoLeitor == locatario.ALUNO_GRADUACAO or locatario.tipoLeitor == locatario.ALUNO_POST or locatario.tipoLeitor == locatario.PROFESSOR):
+            data_devolucao_usuario = 5
+        else:
+            data_devolucao_usuario = 3
+
+        if(obra.CategoriaObra == obra.DISSERT_MESTRADO or obra.CategoriaObra == obra.TESE_DOUTORADO or obra.CategoriaObra == obra.RELATORIO_TECNICO or obra.CategoriaObra == obra.PERIODICO):
+            data_devolucao_obra = 5
+        else:
+            data_devolucao_obra = 3    
+
         situacao = ConsultarCopiaObraSituacaoUseCase.consultarCopiaObraSituacao(obra,listaDeObras)
         for indice,estado in enumerate(situacao): 
             if(estado == 1 and funcionario.usuario == TipoUsuario.FUNCIONARIO and locatario.grupoAcademico == True):
@@ -150,7 +162,7 @@ class EmprestarObraUseCase(IEmprestarObraUseCase):
                         listaDeObras[numeroObra].copias_obra[indice].state = 'Emprestado'
                         listaDeObras[numeroObra].copias_obra[indice].locatario = str(locatario.identificador)
                         listaDeObras[numeroObra].copias_obra[indice].data_locacao = datetime.datetime.now()
-                        listaDeObras[numeroObra].copias_obra[indice].data_devolucao = listaDeObras[numeroObra].copias_obra[indice].data_locacao + datetime.timedelta(days=5)
+                        listaDeObras[numeroObra].copias_obra[indice].data_devolucao = listaDeObras[numeroObra].copias_obra[indice].data_locacao + datetime.timedelta(days=min(data_devolucao_obra,data_devolucao_usuario))
                         listaDeObras[numeroObra].copias_obra[indice].funcionario = funcionario.identificacao
                         print("A copia de id: " + str(listaDeObras[numeroObra].copias_obra[indice].id) + " Agora está emprestada")
                         return listaDeObras
