@@ -7,6 +7,8 @@ Matheus Paladini 769111
 
 Pedro Freire Baleeiro 790984
 
+Nayra Kaline 769847
+
 Linguagem: Python
 
 Integração entre os grupos 1, 5 e 7 utilizando Flask, Heroku, gunicorn e werkzeug.
