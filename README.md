@@ -25,5 +25,9 @@ git clone https://github.com/nyrkln/POOA-Trabalho.git
 ```
 Após isso abra o projeto na sua máquina com o python3 instalado.
 
-2 - Vá no arquivo execucao.py, descomente os trechos de código comentados que tem interesse de rodar, salve e digite "python3 execucao.py" no terminal para rodar. Siga as instruções comentadas no código
+2 - Vá no arquivo execucao.py, descomente os trechos de código comentados que tem interesse de rodar, salve e digite 
+```
+python3 execucao.py
+```
+no terminal para rodar. Siga as instruções comentadas no código
 
