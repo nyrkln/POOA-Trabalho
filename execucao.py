@@ -1,13 +1,27 @@
+#RASCUNO DE TESTES, DESCONSIDERAR 
+#!
+#!
+#!
+#!
+#!
+#!
+#!
+#!
+#!
+#!
+#!
+#!
+#!
 import datetime
 from pickle import APPEND
 import requests
-from pooa.app.obra.use_cases_concrete import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, DevolverObraUseCase, EmprestarObraUseCase, ListarSituacaoCopiaObraUseCase, ReservarObraUseCase,RemoverObraUseCase,ConsultarObrasAtrasadasUseCase,ConsultarCopiaObraSituacaoUseCase
-from pooa.app.obra.use_cases_interfaces import ICadastrarObraUseCase
-from pooa.app.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, ConsultarPendenciasUseCase,RemoverUsuarioUseCase,AlterarDadosUsuarioUseCase,ConsultarLeitoresComPendenciasUseCase,ConsultarDisciplinasUseCase,ConsultarGruposAcademicosUseCase, ValidarUsuarioUseCase
-from pooa.domain.obra import CopiaObra, Obra
-from pooa.domain.pessoas import Usuario,UsuarioFactory,Funcionario,Administrador,Leitor,TipoUsuario,TipoLeitor
-from pooa.app.banco.use_cases_concrete import LeitorBancoObraUseCase,LeitorBancoPessoaUseCase,ReescreveBancoObrassUseCase,ReescreveBancoPessoasUseCase,RequisicaoIdCopiaObraUseCase,RequisicaoIdObraUseCase,RequisicaoIdPessoaUseCase
-from pooa.adapters.controllers import ControllerBanco,ControllerObra,ControllerMovimentacao,ControllerUser
+from pooa.casos_de_uso.obra.use_cases_concrete import AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, DevolverObraUseCase, EmprestarObraUseCase, ListarSituacaoCopiaObraUseCase, ReservarObraUseCase,RemoverObraUseCase,ConsultarObrasAtrasadasUseCase,ConsultarCopiaObraSituacaoUseCase
+from pooa.casos_de_uso.obra.use_cases_interfaces import ICadastrarObraUseCase
+from pooa.casos_de_uso.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, ConsultarPendenciasUseCase,RemoverUsuarioUseCase,AlterarDadosUsuarioUseCase,ConsultarLeitoresComPendenciasUseCase,ConsultarDisciplinasUseCase,ConsultarGruposAcademicosUseCase, ValidarUsuarioUseCase
+from pooa.entidades.obra import CopiaObra, Obra
+from pooa.entidades.pessoas import Usuario,UsuarioFactory,Funcionario,Administrador,Leitor,TipoUsuario,TipoLeitor
+from pooa.casos_de_uso.banco.use_cases_concrete import LeitorBancoObraUseCase,LeitorBancoPessoaUseCase,ReescreveBancoObrassUseCase,ReescreveBancoPessoasUseCase,RequisicaoIdCopiaObraUseCase,RequisicaoIdObraUseCase,RequisicaoIdPessoaUseCase
+from pooa.controladores.controllers import ControllerBanco,ControllerObra,ControllerMovimentacao,ControllerUser
 
 ListaDeObras = [] 
 ListaDePessoas = [[],[]]

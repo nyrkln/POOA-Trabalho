@@ -1,7 +1,7 @@
 from ast import Return
 import os
 from pickle import TRUE
-from pooa.app.pessoas.use_cases_interfaces import (
+from pooa.casos_de_uso.pessoas.use_cases_interfaces import (
     IAdicionarUsuarioUseCase,
     IAlterarDadosUsuarioUseCase,
     IConsultarDisciplinasUseCase,

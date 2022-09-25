@@ -1,9 +1,9 @@
 from ast import List
 import datetime
 import os
-from pooa.domain.pessoas import TipoUsuario, UsuarioFactory, TipoLeitor
-from pooa.domain.obra import Obra, CopiaObra
-from pooa.app.banco.use_cases_interfaces import(
+from pooa.entidades.pessoas import TipoUsuario, UsuarioFactory, TipoLeitor
+from pooa.entidades.obra import Obra, CopiaObra
+from pooa.casos_de_uso.banco.use_cases_interfaces import(
     IReescreveBanco,ILeitorBanco,IRequisicaoId)
 
 class ReescreveBancoPessoasUseCase(IReescreveBanco):

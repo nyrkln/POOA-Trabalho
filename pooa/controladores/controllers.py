@@ -1,6 +1,6 @@
 from typing import List
 from xmlrpc.client import Boolean
-from pooa.app.obra.use_cases_concrete import (
+from pooa.casos_de_uso.obra.use_cases_concrete import (
     CadastrarObraUseCase,
     ConsultarCopiaObraUseCase,
     AlterarDadosObraUseCase,
@@ -13,7 +13,7 @@ from pooa.app.obra.use_cases_concrete import (
     DevolverObraUseCase,
     ConsultarObrasAtrasadasUseCase)
 
-from pooa.app.pessoas.use_cases_concrete import (AlterarDadosUsuarioUseCase, 
+from pooa.casos_de_uso.pessoas.use_cases_concrete import (AlterarDadosUsuarioUseCase, 
     ConsultarDisciplinasUseCase, 
     ConsultarGruposAcademicosUseCase,
     ConsultarPendenciasUseCase,
@@ -22,7 +22,7 @@ from pooa.app.pessoas.use_cases_concrete import (AlterarDadosUsuarioUseCase,
     AdicionarUsuarioUseCase,
     ValidarUsuarioUseCase)
 
-from pooa.app.banco.use_cases_concrete import (
+from pooa.casos_de_uso.banco.use_cases_concrete import (
     ReescreveBancoPessoasUseCase,
     ReescreveBancoObrassUseCase,
     LeitorBancoPessoaUseCase,
@@ -32,7 +32,7 @@ from pooa.app.banco.use_cases_concrete import (
     RequisicaoIdCopiaObraUseCase
 )
 
-from pooa.domain.obra import Obra, CopiaObra
+from pooa.entidades.obra import Obra, CopiaObra
 
 class ControllerObra:
     def __init__(

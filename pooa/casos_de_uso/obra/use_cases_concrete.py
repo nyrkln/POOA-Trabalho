@@ -1,10 +1,10 @@
 import datetime
-from pooa.domain.obra import Obra, CopiaObra, TipoObra
+from pooa.entidades.obra import Obra, CopiaObra, TipoObra
 from pickle import TRUE
 from typing import List
 import os
-from pooa.domain.pessoas import TipoUsuario
-from pooa.app.obra.use_cases_interfaces import (
+from pooa.entidades.pessoas import TipoUsuario
+from pooa.casos_de_uso.obra.use_cases_interfaces import (
     IAlterarDadosObraUseCase,
     ICadastrarCopiaObraUseCase,
     ICadastrarObraUseCase,

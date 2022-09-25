@@ -1,7 +1,7 @@
 """Defines obra abstract interfaces"""
 from abc import ABC, abstractmethod
 from typing import List
-from pooa.domain.obra import Obra, CopiaObra
+from pooa.entidades.obra import Obra, CopiaObra
 
 
 class IConsultarCopiaObraUseCase(ABC):
