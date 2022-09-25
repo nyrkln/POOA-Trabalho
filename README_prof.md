@@ -27,7 +27,6 @@ Disponível em ```.pooa/controladores```
 Para rodar o código, primeiro clone o repositório na sua máquina por meio do terminal com o comando ```git clone https://github.com/nyrkln/POOA-Trabalho.git```
 ou por meio de outro aplicativo como Github Desktop. Após isso abra o projeto na sua máquina com o python3 instalado.
 A partir disso vá no arquivo execucao.py, descomente os trechos de código comentados que tem interesse de rodar, salve e digite ```python3 execucao.py``` no terminal para rodar.
-Para rodar trechos do código relacionados a integração vá no arquivo server e descomente os trechos delimitados por ''', salve e rode novamente o execucao.py
 
 ## Integrações
 ####  Com outros projetos
