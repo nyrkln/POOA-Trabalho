@@ -14,8 +14,6 @@
 #!
 #!
 import datetime
-from pickle import APPEND
-import requests
 from pooa.casos_de_uso.obra.use_cases_concrete import ConsultarCopiaObraUseCase, AlterarDadosObraUseCase, CadastrarCopiaObraUseCase, CadastrarObraUseCase, DevolverObraUseCase, EmprestarObraUseCase, ListarSituacaoCopiaObraUseCase, ReservarObraUseCase,RemoverObraUseCase,ConsultarObrasAtrasadasUseCase,ConsultarCopiaObraSituacaoUseCase
 from pooa.casos_de_uso.obra.use_cases_interfaces import ICadastrarObraUseCase
 from pooa.casos_de_uso.pessoas.use_cases_concrete import AdicionarUsuarioUseCase, ConsultarPendenciasUseCase,RemoverUsuarioUseCase,AlterarDadosUsuarioUseCase,ConsultarLeitoresComPendenciasUseCase,ConsultarDisciplinasUseCase,ConsultarGruposAcademicosUseCase, ValidarUsuarioUseCase
@@ -44,9 +42,13 @@ copia = CopiaObra(1,1,-1,[1,datetime.date(2013, 1, 1),datetime.date(2013, 1, 1)]
 
 #ListaDeObras = controllerObra.cadastrarObra(livro,ListaDeObras,controllerBanco.requisicaoIdObra())
 
+
+#começo teste alterar dados obra
 #ListaDeObras[len(ListaDeObras)-1].titulo = 'titulo alterado'
 
 #ListaDeObras = controllerObra.alterarDadosObra(ListaDeObras[len(ListaDeObras)-1],ListaDeObras)
+#fim teste alterar dados obra
+
 
 #começar o teste de movimentação aqui
 #id_em_uso = controllerBanco.requisicaoIdCopiaObra() #em uma situação normal, usariamos diretamente no cadastro da copia, porém, como não teremos o suposto livre em mãos, o id vai ser guardado para a obra ser devolvida
@@ -56,14 +58,18 @@ copia = CopiaObra(1,1,-1,[1,datetime.date(2013, 1, 1),datetime.date(2013, 1, 1)]
 #ListaDeObras = controllerMovimentacao.reservarObra(ListaDeObras[len(ListaDeObras)-1],ListaDeObras,ListaDePessoas[1][0],ListaDePessoas[0][0])
 
 #controllerObra.listarCopiaObraSituacao(ListaDeObras[len(ListaDeObras)-1],ListaDeObras)
+#pausar aqui é opcional
 
 #ListaDeObras = controllerMovimentacao.devolverObra(ListaDeObras[len(ListaDeObras)-1],ListaDeObras,id_em_uso) # copia sendo devolvida para ser devidamente emprestada
 
 #ListaDeObras = controllerMovimentacao.emprestarObra(ListaDeObras[len(ListaDeObras)-1],ListaDeObras,ListaDePessoas[1][0],ListaDePessoas[0][0])
 
 #controllerObra.listarCopiaObraSituacao(ListaDeObras[len(ListaDeObras)-1],ListaDeObras)
+#pausar aqui é opcional
 
 #ListaDeObras = controllerMovimentacao.devolverObra(ListaDeObras[len(ListaDeObras)-1],ListaDeObras,id_em_uso) #o id é passado, pois, na ida real, teriamos a copia em mãos na hora da devolução
+
+#controllerObra.listarCopiaObraSituacao(ListaDeObras[len(ListaDeObras)-1],ListaDeObras)
 #Acabar teste de movimentação aqui
 
 #controllerObra.consultarObrasAtrasadas(ListaDeObras,ListaDePessoas)#as informações alem de printadas na tela, são retornadas em uma lista
@@ -79,9 +85,12 @@ leitor2 = UsuarioFactory.build_usuario(TipoUsuario.LEITOR,None,'Valter',41905743
 
 #ListaDePessoas = controllerPessoa.adicionarUsuario(ListaDePessoas,leitor2,RequisicaoIdPessoaUseCase.requisicaoId())
 
+
+#começo teste alterar dados pessoas
 #ListaDePessoas[1][len(ListaDePessoas[1]) -1].nome = 'Professor'
 
 #ListaDePessoas = controllerPessoa.alterarDadosUsuario(ListaDePessoas[1][len(ListaDePessoas[1])-1],ListaDePessoas)
+#fim teste alterar dados obra
 
 #controllerPessoa.consultarLeitoresComPendencias(ListaDeObras,ListaDePessoas) #alem de printar, retorna as pessoas com pendencias
 
